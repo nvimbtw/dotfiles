@@ -1,0 +1,121 @@
+# "$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+# The "Tree" Style Prompt with a "Pill" Header
+# Structure: 
+# ╭─[ Languages 󰇝 Git 󰇝 Directory ]
+# ╰─➜ 
+
+format = """\
+[](bold fg:#1e1e2e)\
+[░▒▓](fg:#1e1e2e)\
+$directory\
+$c$csharp$dotnet$golang$java$lua$nodejs$php$python$rust$zig${custom.nix}\
+$git_branch\
+$git_status\
+[](fg:#1e1e2e)\
+$line_break\
+[└─ ](bold fg:#89b4fa)"""
+
+# Move time/cmd duration to the right
+right_format = "$cmd_duration$time"
+
+# --- Core Styles ---
+# We use a unified "Pill" style: Blue background (#89b4fa), Dark text (#11111b).
+
+[directory]
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾 "
+
+[git_branch]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol$branch ]($style)"
+
+[git_status]
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[$all_status]($style)"
+conflicted = ""
+ahead = "⇡ "
+behind = "⇣ "
+diverged = "⇕ "
+untracked = "󱪞 "
+stashed = " "
+modified = " "
+staged = " "
+renamed = " "
+deleted = " "
+
+[cmd_duration]
+min_time = 2000
+style = "bold fg:#fab387"
+format = " [$duration]($style)"
+
+[time]
+disabled = false
+style = "bold fg:#b4befe"
+format = " [$time]($style)[  ](bold fg:#89b4fa)"
+
+# --- Languages (Dynamic Context) ---
+# All languages follow the same style: Icon + Version + Separator
+
+[c]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[dotnet]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[golang]
+symbol = "󰟓 "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[java]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[lua]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version)]($style)"
+
+[nodejs]
+symbol = "󰎙 "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[php]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[python]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[zig]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[rust]
+symbol = " "
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol($version) ]($style)"
+
+[custom.nix]
+description = "Nix Language"
+symbol = "󱄅 "
+detect_extensions = ["nix"]
+style = "bold bg:#1e1e2e fg:#89b4fa"
+format = "[󰇝 $symbol]($style)"

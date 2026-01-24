@@ -1,0 +1,35 @@
+# Font
+font=Monaspace Neon Var 12
+
+# Colors
+background-color=#11111be6
+text-color=#cdd6f4
+border-color=#89b4fa
+
+# Shapes & borders
+border-size=1
+border-radius=10
+
+# Padding & layout
+margin=20
+padding=15
+width=350
+height=200
+
+# Behavior
+default-timeout=5000
+ignore-timeout=false
+layer=overlay
+anchor=top-right
+
+[urgency=low]
+border-color=#1e1e2e
+text-color=#bac2de
+
+[urgency=normal]
+border-color=#89b4fa
+text-color=#cdd6f4
+
+[urgency=high]
+border-color=#f38ba8
+text-color=#f38ba8

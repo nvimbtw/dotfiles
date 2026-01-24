@@ -1,0 +1,25 @@
+(defwindow console
+  :monitor 0
+  :geometry (geometry
+    :x "0px"
+    :y "1px"
+    :width "100%"
+    :height "770px"
+    :anchor "top left"  
+  )
+  :stacking "overlay"
+  :exclusive false     
+  :focusable false     
+  :wm-ignore true      
+  :namespace "eww-console"
+  (console-content)
+)
+
+(defwidget console-content []
+  (box
+    :orientation "vertical"
+    :class "console-box"
+    :halign "fill"
+    :valign "fill"
+  )
+)

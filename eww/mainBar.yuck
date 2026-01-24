@@ -1,0 +1,158 @@
+(defwindow mainBar
+  :monitor 0
+  :geometry (geometry 
+    :x "0%"
+    :y "0%"
+    :width "100%"
+    :height "20px"
+    :anchor "top center"
+  )
+  :stacking "bg"
+  :exclusive true
+  :focusable "ondemand"
+  :reserve (struts :distance "40px" :side "top")
+  :windowtype "dock"
+  :namespace "eww-bar"
+  :wm-ignore false
+  (bar)
+)
+
+(defwidget bar []
+  (box
+    :class "container-box"
+    :orientation "horizontal"
+    :space-evenly true
+    (left)
+    (right)
+  )
+)
+
+(defwidget left []
+  (box
+    :orientation "horizontal"
+    :class "left-box"
+    :halign "start"
+    :space-evenly false
+    (leftOuter)
+    (label
+      :class "left-outer-separator"
+      :text ""
+    )
+    (leftInner)
+    (label
+      :class "left-inner-separator"
+      :text ""
+    )
+  )
+)
+
+;; App name
+(defwidget leftOuter []
+  (box
+    :class "left-box-outer"
+    :space-evenly false
+    (label
+      :class "left-box-outer-clock"
+      :text date_time
+    )
+    (label
+      :class "left-box-outer-separator"
+      :text "󰇝"
+    )
+    (label
+      :class "left-box-outer-clock"
+      :text clock
+    )
+  )
+)
+
+;; App name 
+(deflisten active_window "nu ~/.config/eww/scripts/active_window.sh")
+
+;; Clock
+(deflisten clock "~/.config/eww/scripts/clock.sh")
+
+;; Workspaces (hyprland)
+(defwidget leftInner []
+  (box 
+    :class "left-box-inner"
+    (label 
+      :text " " 
+      :class "workspace-icon"
+    )
+    (for w in workspaces
+      (label 
+        :text "${w.id}"
+        :class {w.active ? "workspace-active" : "workspace"}
+      )
+    )
+  )
+)
+
+;; Workspaces script
+(deflisten workspaces "nu ~/.config/eww/scripts/workspaces.sh")
+
+(defwidget right []
+  (box
+    :orientation "horizontal"
+    :class "right-box"
+    :halign "end"
+    :space-evenly false
+    (label
+      :class "right-inner-separator"
+      :text ""
+    )
+    (rightInner)
+    (label
+      :class "right-outer-separator"
+      :text ""
+    )
+    (rightOuter)
+  )
+)
+
+;; Network
+(defwidget rightInner []
+  (label
+    :class "right-box-inner"
+    :text network
+  )
+)
+
+;; Date
+(defpoll date_time 
+  :interval "600s" "nu ~/.config/eww/scripts/date_time.sh"
+)
+
+;; battery
+(defwidget rightOuter []
+  (box
+    :class "right-box-outer"
+    :space-evenly false
+    (label
+      :class {battery.class}
+      :text {battery.display}
+      :tooltip {battery.time_left}
+    )
+    (label
+      :class "right-box-outer-separator"
+      :text "󰇝"
+    )
+    (label
+      :class "right-box-outer-volume"
+      :text volume
+    )
+  )
+)
+
+;; Battery script
+(deflisten battery
+  :initial '{"capacity": 0, "icon": "󰂎", "status": "Unknown", "time_left": "", "class": "battery-normal", "display": "󰂎 0%"}'
+  "nu ~/.config/eww/scripts/battery.sh"
+)
+
+;; Volume script
+(deflisten volume "~/.config/eww/scripts/volume.nu")
+
+;; Network script
+(deflisten network "~/.config/eww/scripts/network.sh")

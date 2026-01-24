@@ -1,0 +1,102 @@
+* {
+  all: unset;
+  font-family: "Monaspace Neon Var", monospace;
+  font-size: 16px;
+}
+
+.container-box {
+  background-color: rgba(17, 17, 27, 0.8);
+  border-bottom: 1px solid rgb(69, 71, 90);
+}
+
+.console-box {
+  background-color: rgba(17, 17, 27, 0.8);
+  border: 1px solid rgb(69, 71, 90);
+}
+
+.left-box-outer {
+  background-color: #1e1e2e;
+  color: #89b4fa;
+  padding: 0 15px;
+  font-weight: 600;
+}
+
+.right-box-outer {
+  background-color: #1e1e2e;
+  color: #89b4fa;
+  padding: 0 15px;
+  font-weight: 600;
+}
+
+.left-box-inner {
+  padding: 0 5px;
+  color: rgb(180, 190, 254);
+}
+
+.right-box-inner {
+  padding: 0 15px;
+  color: rgb(180, 190, 254);
+  font-weight: 400;
+}
+
+.left-outer-separator {
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #1e1e2e;
+  font-family: "Monaspace Neon NF", monospace;
+}
+
+.right-outer-separator {
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #1e1e2e;
+  margin-top: -1px;
+  font-family: "Monaspace Neon NF", monospace;
+}
+
+.left-inner-separator,
+.right-inner-separator {
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  color: rgb(180, 190, 254);
+  font-family: "Monaspace Neon NF", monospace;
+}
+
+.workspace {
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: rgb(49, 50, 68);
+  font-weight: 600;
+}
+
+.workspace-active {
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: rgb(180, 190, 254);
+  font-weight: 600;
+}
+
+.battery-low {
+  color: #f38ba8;
+}
+
+.battery-charging {
+  color: #a6e3a1;
+}
+
+.battery-normal {
+  color: #89b4fa;
+}
+
+.workspace-icon {
+  padding: 0 5px 0 10px;
+}
+
+.right-box-outer-separator,
+.left-box-outer-separator {
+  margin: 0 15px;
+  font-size: 20px;
+  background-color: transparent;
+  color: #89b4fa;
+  font-family: "Monaspace Neon NF", monospace;
+}
