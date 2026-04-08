@@ -9,24 +9,24 @@ while true; do
     eth=$(nmcli -t -f TYPE,STATE dev status | grep '^ethernet:connected' | cut -d: -f2)
 
     if [ -n "$eth" ]; then
-        icon="󱎔 "
+        icon="󱎔"
         name="Ethernet"
     elif [ -n "$ssid" ]; then
         if [ "$signal" -ge 75 ]; then
-            icon="󰤨 "
+            icon="󰤨"
         elif [ "$signal" -ge 50 ]; then
-            icon="󰤥 "
+            icon="󰤥"
         elif [ "$signal" -ge 25 ]; then
-            icon="󰤢 "
+            icon="󰤢"
         else
-            icon="󰤟 "
+            icon="󰤟"
         fi
         name="$ssid"
     else
-        icon="󰤮 "
+        icon="󰤮"
         name="Disconnected"
     fi
 
-    printf "%s %s\n" "$icon" "$name"
+    echo "{\"icon\": \"$icon\", \"name\": \"$name\"}"
     sleep $INTERVAL
 done

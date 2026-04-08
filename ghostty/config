@@ -1,17 +1,18 @@
-theme = Catppuccin Mocha
-background = #11111b
-cursor-color = #89b4fa
+theme = Oxocarbon
+background = #161616
+cursor-color = #3ddbd9
 cursor-style-blink = false
-font-family = Monaspace Neon Var
+font-family = MonaspiceNe Nerd Font Mono
 font-feature = +liga, +calt, +ss01, +ss02, +ss03, +ss04, +ss05, +ss06, +ss07, +ss08, +ss09, +ss10
 font-variation = wght=300
 font-variation-bold = wght=600
-font-family-italic = Monaspace Radon Var
-background-opacity = 0.8
+font-size = 13
+background-opacity = 1
 window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
 window-padding-color = extend
 window-decoration = none
-# custom-shader = ~/.config/ghostty/shaders/bloom.glsl
 alpha-blending = linear-corrected
+#custom-shader = shaders/cursor_warp.glsl
+#custom-shader-animation = true

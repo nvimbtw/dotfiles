@@ -1,0 +1,41 @@
+# Rose Pine theme for Zathura
+set notification-error-bg       "#1f1d2e"
+set notification-error-fg       "#eb6f92"
+set notification-warning-bg     "#1f1d2e"
+set notification-warning-fg     "#f6c177"
+set notification-bg             "#1f1d2e"
+set notification-fg             "#e0def4"
+
+set completion-bg               "#191724"
+set completion-fg               "#908caa"
+set completion-group-bg         "#191724"
+set completion-group-fg         "#31748f"
+set completion-highlight-bg     "#26233a"
+set completion-highlight-fg     "#e0def4"
+
+set index-bg                    "#191724"
+set index-fg                    "#e0def4"
+set index-active-bg             "#26233a"
+set index-active-fg             "#e0def4"
+
+set inputbar-bg                 "#191724"
+set inputbar-fg                 "#e0def4"
+
+set statusbar-bg                "#191724"
+set statusbar-fg                "#e0def4"
+
+set highlight-color             "#f6c177"
+set highlight-active-color      "#eb6f92"
+
+set default-bg                  "#191724"
+set default-fg                  "#e0def4"
+
+set render-loading              true
+set render-loading-fg           "#191724"
+set render-loading-bg           "#e0def4"
+
+# Recoloring settings - toggle with Ctrl+r
+set recolor-lightcolor          "#191724"
+set recolor-darkcolor           "#e0def4"
+set recolor                     false
+set recolor-keephue

@@ -9,7 +9,7 @@
   )
   :stacking "bg"
   :exclusive true
-  :focusable "ondemand"
+  :focusable false
   :reserve (struts :distance "40px" :side "top")
   :windowtype "dock"
   :namespace "eww-bar"
@@ -21,138 +21,86 @@
   (box
     :class "container-box"
     :orientation "horizontal"
-    :space-evenly true
-    (left)
-    (right)
+    (box :halign "start" :space-evenly false (left))
+    (box :halign "center" :hexpand true (center))
+    (box :halign "end" :space-evenly false (right))
   )
 )
 
 (defwidget left []
   (box
-    :orientation "horizontal"
     :class "left-box"
     :halign "start"
     :space-evenly false
-    (leftOuter)
-    (label
-      :class "left-outer-separator"
-      :text ""
-    )
-    (leftInner)
-    (label
-      :class "left-inner-separator"
-      :text ""
-    )
+    (label-with-icon :icon {date_time.icon} :text {date_time.date} :class "date")
+    (label :class "sep" :text "󰇝")
+    (label-with-icon :icon {clock.icon} :text {clock.time} :class "clock")
+    (label :class "sep" :text "󰇝")
+    (workspaces-widget)
   )
 )
 
-;; App name
-(defwidget leftOuter []
+(defwidget center []
   (box
-    :class "left-box-outer"
-    :space-evenly false
-    (label
-      :class "left-box-outer-clock"
-      :text date_time
-    )
-    (label
-      :class "left-box-outer-separator"
-      :text "󰇝"
-    )
-    (label
-      :class "left-box-outer-clock"
-      :text clock
+    :class "center-box"
+    :halign "center"
+    (bluetooth-battery-widget)
+  )
+)
+
+(defwidget bluetooth-battery-widget []
+  (box
+    :visible {bluetooth_battery.connected}
+    (label-with-icon 
+      :icon {bluetooth_battery.icon} 
+      :text "${bluetooth_battery.capacity}%" 
+      :class {bluetooth_battery.class}
     )
   )
 )
 
-;; App name 
-(deflisten active_window "nu ~/.config/eww/scripts/active_window.sh")
+(defwidget right []
+  (box
+    :class "right-box"
+    :halign "end"
+    :space-evenly false
+    (label-with-icon :icon {network.icon} :text {network.name} :class "network")
+    (label :class "sep" :text "󰇝")
+    (label-with-icon :icon {battery.icon} :text "${battery.capacity}%" :class {battery.class})
+    (label :class "sep" :text "󰇝")
+    (label-with-icon :icon {volume.icon} :text {volume.vol} :class "volume")
+  )
+)
 
-;; Clock
-(deflisten clock "~/.config/eww/scripts/clock.sh")
+(defwidget label-with-icon [icon text class]
+  (box
+    :class class
+    :orientation "horizontal"
+    :space-evenly false
+    (label :class "icon" :text icon)
+    (label :text text)
+  )
+)
 
-;; Workspaces (hyprland)
-(defwidget leftInner []
+(defwidget workspaces-widget []
   (box 
-    :class "left-box-inner"
-    (label 
-      :text " " 
-      :class "workspace-icon"
-    )
+    :class "workspaces"
+    :space-evenly false
+    :spacing 8
     (for w in workspaces
       (label 
-        :text "${w.id}"
+        :text {w.active ? "󰝤" : "󰝣"}
         :class {w.active ? "workspace-active" : "workspace"}
       )
     )
   )
 )
 
-;; Workspaces script
+;; Scripts
+(deflisten clock :initial '{"icon": "󱑋", "time": "00:00"}' "bash ~/.config/eww/scripts/clock.sh")
+(defpoll date_time :interval "600s" :initial '{"icon": "", "date": "1. Jan"}' "nu ~/.config/eww/scripts/date_time.sh")
 (deflisten workspaces "nu ~/.config/eww/scripts/workspaces.sh")
-
-(defwidget right []
-  (box
-    :orientation "horizontal"
-    :class "right-box"
-    :halign "end"
-    :space-evenly false
-    (label
-      :class "right-inner-separator"
-      :text ""
-    )
-    (rightInner)
-    (label
-      :class "right-outer-separator"
-      :text ""
-    )
-    (rightOuter)
-  )
-)
-
-;; Network
-(defwidget rightInner []
-  (label
-    :class "right-box-inner"
-    :text network
-  )
-)
-
-;; Date
-(defpoll date_time 
-  :interval "600s" "nu ~/.config/eww/scripts/date_time.sh"
-)
-
-;; battery
-(defwidget rightOuter []
-  (box
-    :class "right-box-outer"
-    :space-evenly false
-    (label
-      :class {battery.class}
-      :text {battery.display}
-      :tooltip {battery.time_left}
-    )
-    (label
-      :class "right-box-outer-separator"
-      :text "󰇝"
-    )
-    (label
-      :class "right-box-outer-volume"
-      :text volume
-    )
-  )
-)
-
-;; Battery script
-(deflisten battery
-  :initial '{"capacity": 0, "icon": "󰂎", "status": "Unknown", "time_left": "", "class": "battery-normal", "display": "󰂎 0%"}'
-  "nu ~/.config/eww/scripts/battery.sh"
-)
-
-;; Volume script
-(deflisten volume "~/.config/eww/scripts/volume.nu")
-
-;; Network script
-(deflisten network "~/.config/eww/scripts/network.sh")
+(deflisten network :initial '{"icon": "󰤮", "name": "Disconnected"}' "bash ~/.config/eww/scripts/network.sh")
+(deflisten battery :initial '{"capacity": 0, "icon": "󰂎", "class": "battery-normal"}' "nu ~/.config/eww/scripts/battery.sh")
+(deflisten bluetooth_battery :initial '{"connected": false, "capacity": 0, "icon": "", "class": "battery-normal"}' "bash ~/.config/eww/scripts/bluetooth_battery.sh")
+(deflisten volume :initial '{"icon": "󰝟", "vol": "0%"}' "bash ~/.config/eww/scripts/volume.nu")

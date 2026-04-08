@@ -1,0 +1,39 @@
+2026-01-29T12:30:48 exception: Failed to open "/home/x_x/.config/mpd/state": No such file or directory
+2026-01-29T12:30:48 update: added Spotify-LF/Juice - Compromise v2.mp3
+2026-01-29T12:31:22 exception: Not playing
+2026-01-29T12:31:47 exception: Access to local files via TCP is not allowed
+2026-01-29T12:32:45 exception: Failed to decode "/home/x_x/Music/Spotify-LF/Juice - Compromise v2.mp3"; Failed to open "/home/x_x/Music/Spotify-LF/Juice - Compromise v2.mp3": No such file or directory
+2026-01-29T12:32:45 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-01-29T12:32:45 exception: Failed to decode "/home/x_x/Music/Spotify-LF/Juice - Compromise v2.mp3"; Failed to open "/home/x_x/Music/Spotify-LF/Juice - Compromise v2.mp3": No such file or directory
+2026-01-29T12:32:45 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-01-29T12:39:23 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-01-29T12:41:10 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-01-29T12:45:13 exception: No such directory
+2026-01-29T12:45:38 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-01-29T12:49:02 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-01-29T12:51:34 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-03T17:04:23 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-03T19:18:52 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-03T21:23:49 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-06T08:10:26 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-09T14:24:24 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-11T19:29:56 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-11T23:16:34 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-11T23:18:23 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-23T22:35:57 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-02-26T20:48:33 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-01T12:22:45 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-08T10:55:53 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-10T23:45:08 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-12T15:13:04 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-13T07:59:32 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-22T23:51:25 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-24T03:52:44 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-03-24T16:39:54 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-04-03T15:06:55 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-04-04T14:17:46 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-04-04T17:42:45 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-04-04T17:48:28 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-04-07T19:57:30 player: played "Spotify-LF/Juice - Compromise v2.mp3"
+2026-04-07T19:58:18 exception: Failed to decode "/home/x_x/Music/Spotify-LF/Juice - Compromise v2.mp3"; Failed to open "/home/x_x/Music/Spotify-LF/Juice - Compromise v2.mp3": No such file or directory
+2026-04-07T19:58:18 player: played "Spotify-LF/Juice - Compromise v2.mp3"

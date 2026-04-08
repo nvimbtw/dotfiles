@@ -1,16 +1,86 @@
+# ==========================================
+# WHITELIST DOTFILES CONFIG
+# ==========================================
+
+# 1. Ignore everything by default
 /*
 
-!.gitignore
-!hypr/
-!eww/
-!ghostty/
-!rofi/
-!mako/
-!starship.toml
-!fish/
-!fastfetch/
-!btop/
-!git/
-!scripts/
-!lazygit/
-!tmux/
+# 2. Allow this .gitignore
+!/.gitignore
+
+# 3. Allow loose config files
+!/chromium-flags.conf
+!/mimeapps.list
+!/QtProject.conf
+!/starship.toml
+
+# 4. Allow configuration directories
+!/autostart/
+!/btop/
+!/environment.d/
+!/eww/
+!/fastfetch/
+!/gammastep/
+!/ghostty/
+!/git/
+!/gtk-3.0/
+!/hypr/
+!/kitty/
+!/lazygit/
+!/mako/
+!/mpd/
+!/mpv/
+!/nushell/
+!/nvim/
+!/obs-studio/
+!/opencode/
+!/quickshell/
+!/rofi/
+!/scripts/
+!/simple-update-notifier/
+!/spicetify/
+!/systemd/
+!/television/
+!/tmux/
+!/vesktop/
+!/zathura/
+
+# 5. Bullshit Removal (Runtime/Cache/State)
+# ------------------------------------------
+
+# MPD
+/mpd/database
+/mpd/sticker.sql
+
+# OBS Studio
+/obs-studio/logs/
+/obs-studio/profiler_data/
+/obs-studio/.sentinel/
+
+# Opencode
+/opencode/node_modules/
+
+# Nushell
+/nushell/history.txt
+
+# Vesktop (Keep only themes and settings.json)
+/vesktop/*
+!/vesktop/themes/
+!/vesktop/settings.json
+
+# Spicetify (Keep config, ignore default clones)
+/spicetify/Themes/
+/spicetify/CustomApps/
+/spicetify/Extensions/
+!/spicetify/config-xpui.ini
+
+# General Cleanup
+**/.git/
+**/*.pma
+**/Cache/
+**/Code Cache/
+**/GPUCache/
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.swp

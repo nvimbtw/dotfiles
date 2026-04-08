@@ -1,20 +1,26 @@
 # Font
-font=Monaspace Neon Var 12
+font=MonaspiceNe Nerd Font 12
 
-# Colors
-background-color=#11111be6
-text-color=#cdd6f4
-border-color=#89b4fa
+# Colors (Oxocarbon Dark)
+background-color=#161616
+text-color=#f2f4f8
+border-color=#525252
 
-# Shapes & borders
-border-size=1
-border-radius=10
+# Brutalistic shapes & borders
+border-size=3
+border-radius=0
 
 # Padding & layout
-margin=20
-padding=15
+margin=10
+padding=12
 width=350
 height=200
+
+# Eye candy
+progress-color=#08bdba
+icons=1
+max-visible=5
+format=<b>%s</b>\n%b
 
 # Behavior
 default-timeout=5000
@@ -23,13 +29,13 @@ layer=overlay
 anchor=top-right
 
 [urgency=low]
-border-color=#1e1e2e
-text-color=#bac2de
+format=%s\n%b\n<span color="#525252"><b>─ LOW</b></span>
+border-color=#525252
 
 [urgency=normal]
-border-color=#89b4fa
-text-color=#cdd6f4
+format=%s\n%b\n<span color="#f2f4f8"><b>■ NORMAL</b></span>
+border-color=#525252
 
 [urgency=high]
-border-color=#f38ba8
-text-color=#f38ba8
+format=%s\n%b\n<span color="#ee5396"><b>▲ HIGH</b></span>
+border-color=#525252

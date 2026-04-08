@@ -1,232 +1,103 @@
 configuration {
+  modi: "drun,run,window,ssh";
   show-icons: false;
-  sidebar-mode: false;
-  display-drun: "Apps";
-  display-run: "Run";
-  display-window: "Windows";
+  display-drun: "APPS";
+  display-run: "RUN";
+  display-window: "WIN";
   display-ssh: "SSH";
-  font: "Monaspace Neon Var 12";
   drun-display-format: "{name}";
+  font: "MonaspiceNe Nerd Font bold 12";
 }
 
 * {
-  crust: rgb(17, 17, 27);
-  crust-transparent: rgba(17, 17, 27, 0.3);
-  mantle: rgb(24, 24, 37);
-  base: rgb(30, 30, 46);
-  base-transparent: rgba(30, 30, 46, 0.5);
-  
-  blue: rgb(137, 180, 250);
-  blue-transparent: rgba(137, 180, 250, 0.1);
-  lavender: rgb(180, 190, 254);
-  lavender-transparent: rgba(180, 190, 254, 0.1);
-  sky: rgb(137, 220, 235);
+  /* Oxocarbon Palette */
+  base00: #161616;
+  base03: #525252;
+  cyan:   #3ddbd9;
+  purple: #be95ff;
+  pink:   #ff7eb6;
+  text:   #f2f4f8;
 
-  light-border: rgb(69, 71, 90);
+  background-color: transparent;
+  text-color:       @text;
   
-  transparent: rgba(0, 0, 0, 0);
-  
-  background-color: @crust-transparent;
-  text-color: @blue;
+  margin:  0;
+  padding: 0;
+  spacing: 0;
 }
+
 window {
-  location: center;
-  width: 500px;
-  background-color: @crust-transparent;
-  border: 1px solid;
-  border-color: @base;
-  padding: 0;
+  width:            600px;
+  background-color: @base00;
+  border:           2px;
+  border-color:     @base03;
+  location:         center;
+  anchor:           center;
 }
+
 mainbox {
-  background-color: @crust-transparent;
-  children: [ inputbar, listview, mode-switcher ];
-  spacing: 0;
-  padding: 0;
+  /* Removed mode-switcher for a cleaner look */
+  children: [ inputbar, listview ];
 }
+
 inputbar {
-  background-color: @crust-transparent;
-  children: [ prompt, textbox-prompt-colon, entry, num-filtered-rows, textbox-num-sep, num-rows ];
-  spacing: 0;
-  padding: 0;
-  border: 0 0 1px 0 solid;
-  border-color: @base;
+  padding:          12px;
+  background-color: @base00;
+  children:         [ prompt, textbox-sep, entry ];
+  border:           0 0 2px 0;
+  border-color:     @base03;
 }
+
 prompt {
-  background-color: @base;
-  text-color: @blue;
-  padding: 4px 8px 4px 16px;
-  font: "Monaspace Neon Var bold 12";
+  text-color: @cyan;
+  font:       "MonaspiceNe Nerd Font bold 12";
 }
-textbox-prompt-colon {
-  background-color: @crust-transparent;
-  text-color: @base;
-  padding: 0;
-  margin: 0px 0px 0px 0px;
-  str: "";
-  expand: false;
-  font: "Monaspace Neon NF bold 16";
+
+textbox-sep {
+  expand:     false;
+  str:        "󰇝";
+  text-color: @base03;
+  padding:    0 12px;
 }
+
 entry {
-  background-color: @crust-transparent;
-  text-color: @lavender;
-  placeholder-color: @lavender;
-  padding: 4px 16px 4px 8px;
-  placeholder: "Search...";
-  expand: true;
-  font: "Monaspace Neon Var 12";
-}
-num-filtered-rows {
-  background-color: @crust-transparent;
-  text-color: @lavender;
-  padding: 4px 8px;
-  font: "Monaspace Neon Var 12";
-}
-
-num-rows {
-  background-color: @base;
-  text-color: @blue;
-  padding: 4px 8px;
-  font: "Monaspace Neon Var bold 12";
-}
-
-textbox-num-sep {
-  background-color: @crust-transparent;
-  text-color: @base;
-  font: "Monaspace Neon NF bold 16";
-  str: "";
+  text-color:        @purple;
+  placeholder:       "SEARCH...";
+  placeholder-color: @base03;
 }
 
 listview {
-  background-color: @crust-transparent;
-  padding: 12px;
-  spacing: 4px;
-  scrollbar: false;
-  border: 0;
-  cycle: true;
-  dynamic: true;
-  fixed-height: true;
-  lines: 6;
+  padding:      12px;
+  lines:        8;
+  columns:      1;
+  fixed-height: false;
+  spacing:      4px;
 }
+
 element {
-  background-color: transparent;
-  text-color: @lavender;
-  padding: 8px 16px;
-  spacing: 0;
-  children: [ element-text ];
-  cursor: pointer;
-  border: 1px solid;
-  border-color: transparent;
-  border-radius: 8px;
+  padding:      8px;
+  spacing:      8px;
+  border-radius: 4px;
 }
+
 element-text {
-  background-color: transparent;
   text-color: inherit;
-  cursor: inherit;
-  highlight: inherit;
-  vertical-align: 0.5;
-  font: "Monaspace Neon Var 12";
+  font:       "MonaspiceNe Nerd Font bold 12";
 }
-element-icon {
-  size: 0px;
-  enabled: false;
-}
-element normal {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
+
 element normal.normal {
-    background-color: @transparent;
-    text-color:       @lavender;
+  background-color: @base00;
+  text-color:       @text;
 }
-element normal.urgent {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
-element normal.active {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
-element selected {
-    background-color: @blue-transparent;
-    border-color:     @blue;
-    text-color:       @blue;
-}
+
 element selected.normal {
-    background-color: @blue-transparent;
-    border-color:     @blue;
-    text-color:       @blue;
+  background-color: @base03;
+  text-color:       @pink;
 }
-element selected.urgent {
-    background-color: @blue-transparent;
-    border-color:     @blue;
-    text-color:       @blue;
-}
-element selected.active {
-    background-color: @blue-transparent;
-    border-color:     @blue;
-    text-color:       @blue;
-}
-element alternate {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
+
 element alternate.normal {
-    background-color: @transparent;
-    text-color:       @lavender;
+  background-color: @base00;
+  text-color:       @text;
 }
-element alternate.urgent {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
-element alternate.active {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
-element active {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
-element urgent {
-    background-color: @transparent;
-    text-color:       @lavender;
-}
-mode-switcher {
-  background-color: @transparent;
-  spacing: 12px;
-  padding: 12px;
-  border: 1px 0px 0px 0px;
-  border-color: @base;
-}
-button {
-  background-color: @base-transparent;
-  text-color: @blue;
-  padding: 8px;
-  cursor: pointer;
-  border: 1px solid;
-  border-color: @base;
-  border-radius: 8px;
-  font: "Monaspace Neon Var bold 12";
-}
-button selected {
-  background-color: @lavender-transparent;
-  text-color: @lavender;
-  border-color: @lavender;
-}
-scrollbar {
-  handle-color: @lavender;
-  handle-width: 3px;
-  border: 0;
-  background-color: @crust-transparent;
-  margin: 0px 4px;
-  border-radius: 2px;
-}
-scrollbar handle {
-  border-radius: 0px;
-}
-message {
-  background-color: @base;
-  border: 1px solid;
-  border-color: @sky;
-  padding: 12px;
-  margin: 8px;
-}
+
+/* mode-switcher and buttons removed to keep it minimalist */

@@ -39,14 +39,14 @@ def get_battery [prev_energy: int] {
             # Charging - time until full
             let hours = (($energy_full - $energy_now) / $power_now)
             let mins = (($hours - ($hours | math floor)) * 60 | math round)
-            $time_left_msg = $"($hours | math floor)h ($mins)m until full"
+            $time_left_msg = $"($hours | math floor)h ($mins)m ($up_arrow)"
             $display_time = $" [($hours | math floor)h ($mins)m ($trend_arrow)]"
             $icon = "󰂄"
         } else {
             # Discharging - time until empty
             let hours = ($energy_now / $power_now)
             let mins = (($hours - ($hours | math floor)) * 60 | math round)
-            $time_left_msg = $"($hours | math floor)h ($mins)m left"
+            $time_left_msg = $"($hours | math floor)h ($mins)m ($down_arrow)"
             $display_time = $" [($hours | math floor)h ($mins)m ($trend_arrow)]"
         }
     } else {
@@ -68,20 +68,48 @@ def get_battery [prev_energy: int] {
         status: $status,
         time_left: $time_left_msg,
         class: $class,
-        display: $"($icon) ($capacity)%($display_time)"
-    } | to json --raw)
+        display: $"($icon) ($capacity)%",
+        power: $power_now,
+        power_input: (if $trend_arrow == $up_arrow { $power_now } else { 0 }),
+        energy: $energy_now
+    })
 
-    print $json_output
+    print ($json_output | to json --raw)
 
-    # Return current energy for next iteration
-    $energy_now
+    # Return current stats for next iteration and logging
+    $json_output
+}
+
+let log_file = $"($env.HOME)/.cache/eww_battery.csv"
+
+def log_battery [stats] {
+    let now = (date now | into int)
+    let row = {
+        timestamp: $now, 
+        capacity: $stats.capacity, 
+        power: $stats.power, 
+        status: $stats.status
+    }
+    
+    if not ($log_file | path exists) {
+        [$row] | save $log_file
+    } else {
+        # Append and prune older than 24h
+        let day_ago = ((date now) - 24hr | into int)
+        let data = (open $log_file | append $row | where timestamp > $day_ago)
+        $data | save $log_file --force
+    }
 }
 
 # Output initial battery state
-mut prev_energy = (get_battery -1)
+mut stats = (get_battery -1)
+log_battery $stats
+mut prev_energy = $stats.energy
 
 # Update every 10 seconds
 loop {
     sleep 10sec
-    $prev_energy = (get_battery $prev_energy)
+    $stats = (get_battery $prev_energy)
+    log_battery $stats
+    $prev_energy = $stats.energy
 }

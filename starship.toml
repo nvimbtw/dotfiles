@@ -2,120 +2,95 @@
 
 add_newline = true
 
-# The "Tree" Style Prompt with a "Pill" Header
-# Structure: 
-# ╭─[ Languages 󰇝 Git 󰇝 Directory ]
-# ╰─➜ 
+format = """
+ $directory\
+$git_branch$git_status\
+$c$csharp$dotnet$golang$java$lua$nodejs$php$python$rust$zig$character\
+ """
 
-format = """\
-[](bold fg:#1e1e2e)\
-[░▒▓](fg:#1e1e2e)\
-$directory\
-$c$csharp$dotnet$golang$java$lua$nodejs$php$python$rust$zig${custom.nix}\
-$git_branch\
-$git_status\
-[](fg:#1e1e2e)\
-$line_break\
-[└─ ](bold fg:#89b4fa)"""
-
-# Move time/cmd duration to the right
-right_format = "$cmd_duration$time"
-
-# --- Core Styles ---
-# We use a unified "Pill" style: Blue background (#89b4fa), Dark text (#11111b).
+# No right format (removed time and arch logo)
+right_format = ""
 
 [directory]
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[  $path ]($style)"
+style = "bold fg:#3ddbd9"
+format = "[ $path]($style) "
 truncation_length = 3
 truncation_symbol = "…/"
 read_only = " 󰌾 "
 
 [git_branch]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol$branch ]($style)"
+style = "bold fg:#be95ff"
+format = "[󰇝 ](fg:#525252)[$symbol$branch]($style) "
 
 [git_status]
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[$all_status]($style)"
-conflicted = ""
-ahead = "⇡ "
-behind = "⇣ "
-diverged = "⇕ "
-untracked = "󱪞 "
-stashed = " "
-modified = " "
-staged = " "
-renamed = " "
-deleted = " "
+format = "$all_status"
+conflicted = "[ ](fg:#ee5396)"
+ahead = "[⇡ ](fg:#3ddbd9)"
+behind = "[⇣ ](fg:#3ddbd9)"
+diverged = "[⇕ ](fg:#3ddbd9)"
+untracked = "[󱪞 ](fg:#ff7eb6)"
+stashed = "[ ](fg:#42be65)"
+modified = "[ ](fg:#ff7eb6)"
+staged = "[ ](fg:#42be65)"
+renamed = "[ ](fg:#42be65)"
+deleted = "[ ](fg:#ee5396)"
 
 [cmd_duration]
 min_time = 2000
-style = "bold fg:#fab387"
-format = " [$duration]($style)"
+style = "bold fg:#525252"
+format = "[󰇝 $duration]($style) "
 
-[time]
-disabled = false
-style = "bold fg:#b4befe"
-format = " [$time]($style)[  ](bold fg:#89b4fa)"
-
-# --- Languages (Dynamic Context) ---
-# All languages follow the same style: Icon + Version + Separator
+[character]
+success_symbol = "[󰔰](bold fg:#82cfff)"
+error_symbol = "[󰔰](bold fg:#82cfff)"
 
 [c]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [dotnet]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [golang]
 symbol = "󰟓 "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [java]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [lua]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version)]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [nodejs]
 symbol = "󰎙 "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [php]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [python]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [zig]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
 
 [rust]
 symbol = " "
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol($version) ]($style)"
-
-[custom.nix]
-description = "Nix Language"
-symbol = "󱄅 "
-detect_extensions = ["nix"]
-style = "bold bg:#1e1e2e fg:#89b4fa"
-format = "[󰇝 $symbol]($style)"
+style = "bold fg:#ff7eb6"
+format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "

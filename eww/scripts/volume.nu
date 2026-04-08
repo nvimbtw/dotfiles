@@ -1,35 +1,34 @@
 #!/usr/bin/env bash
 
-file="$HOME/.tmp/volume.txt"
-
-# Ensure the file exists
-[ -f "$file" ] || echo 0 > "$file"
-
-# Function to print the volume with an icon
+# Function to get volume and print with icon
 print_volume() {
-    vol=$(<"$file")       # read the number
-    vol=${vol//[^0-9]/}  # sanitize just in case
+    # Get volume from PipeWire
+    vol_output=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
 
-    # check for bluetooth
-    if bluetoothctl devices Connected | grep -q "Device"; then
-        icon="󰋋" # Wireless earbuds/headset icon
-    elif [ "$vol" -eq 0 ]; then
-        icon=""   # muted
+    # Extract the volume number (e.g., "Volume: 0.30" -> 30)
+    vol=$(echo "$vol_output" | awk '{printf "%.0f", $2 * 100}')
+
+    # Check if muted
+    muted=$(echo "$vol_output" | grep "MUTED" && echo "yes" || echo "no")
+
+    # check for muting and volume levels
+    if [ "$muted" = "yes" ] || [ "$vol" -eq 0 ]; then
+        icon="󰝟"   # muted
     elif [ "$vol" -le 30 ]; then
-        icon=""   # low
+        icon="󰕿"   # low
     elif [ "$vol" -le 70 ]; then
-        icon=""   # medium
+        icon="󰖀"   # medium
     else
-        icon=""   # high
+        icon="󰕾"   # high
     fi
 
-    echo "$icon  $vol%"
+    echo "{\"icon\": \"$icon\", \"vol\": \"$vol%\"}"
 }
 
 # Print initial value
 print_volume
 
-# Watch for changes
-inotifywait -m -e close_write "$file" | while read -r _; do
+# Watch for sink changes using pactl subscribe
+pactl subscribe 2>/dev/null | grep --line-buffered "sink" | while read -r _; do
     print_volume
 done
