@@ -4,7 +4,7 @@
     :x "0%"
     :y "0%"
     :width "100%"
-    :height "20px"
+    :height "30px"
     :anchor "top center"
   )
   :stacking "bg"
@@ -32,6 +32,7 @@
     :class "left-box"
     :halign "start"
     :space-evenly false
+    :spacing 16
     (label-with-icon :icon {date_time.icon} :text {date_time.date} :class "date")
     (label :class "sep" :text "󰇝")
     (label-with-icon :icon {clock.icon} :text {clock.time} :class "clock")
@@ -44,6 +45,7 @@
   (box
     :class "center-box"
     :halign "center"
+    :spacing 16
     (bluetooth-battery-widget)
   )
 )
@@ -51,6 +53,7 @@
 (defwidget bluetooth-battery-widget []
   (box
     :visible {bluetooth_battery.connected}
+    :spacing 16
     (label-with-icon 
       :icon {bluetooth_battery.icon} 
       :text "${bluetooth_battery.capacity}%" 
@@ -64,6 +67,7 @@
     :class "right-box"
     :halign "end"
     :space-evenly false
+    :spacing 16
     (label-with-icon :icon {network.icon} :text {network.name} :class "network")
     (label :class "sep" :text "󰇝")
     (label-with-icon :icon {battery.icon} :text "${battery.capacity}%" :class {battery.class})
@@ -86,7 +90,7 @@
   (box 
     :class "workspaces"
     :space-evenly false
-    :spacing 8
+    :spacing 6
     (for w in workspaces
       (label 
         :text {w.active ? "󰝤" : "󰝣"}
@@ -101,6 +105,6 @@
 (defpoll date_time :interval "600s" :initial '{"icon": "", "date": "1. Jan"}' "nu ~/.config/eww/scripts/date_time.sh")
 (deflisten workspaces "nu ~/.config/eww/scripts/workspaces.sh")
 (deflisten network :initial '{"icon": "󰤮", "name": "Disconnected"}' "bash ~/.config/eww/scripts/network.sh")
-(deflisten battery :initial '{"capacity": 0, "icon": "󰂎", "class": "battery-normal"}' "nu ~/.config/eww/scripts/battery.sh")
+(deflisten battery :initial '{"capacity": 0, "icon": "󰂎", "class": "battery-normal", "status": "Unknown", "time_left": "", "power": 0, "power_input": 0}' "nu ~/.config/eww/scripts/battery.sh")
 (deflisten bluetooth_battery :initial '{"connected": false, "capacity": 0, "icon": "", "class": "battery-normal"}' "bash ~/.config/eww/scripts/bluetooth_battery.sh")
 (deflisten volume :initial '{"icon": "󰝟", "vol": "0%"}' "bash ~/.config/eww/scripts/volume.nu")

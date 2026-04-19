@@ -1,70 +1,193 @@
+/* 
+ * Oxocarbon Dark (base16) Brutalist Styling 
+ * Following Kole Jain's UI/UX principles.
+ */
+
+/* Palette */
+@define-color base00 #161616; /* Main Background */
+@define-color base01 #262626; /* Elevated Surface */
+@define-color base02 #393939; /* Selection/Subtle Border */
+@define-color base03 #525252; /* Strong Border */
+@define-color base04 #dde1e6;
+@define-color base05 #f2f4f8; /* Foreground */
+@define-color base06 #ffffff;
+@define-color base07 #08bdba;
+@define-color base08 #3ddbd9; /* Cyan */
+@define-color base09 #78a9ff;
+@define-color base0A #ee5396; /* Pink/High Status */
+@define-color base0B #33b1ff;
+@define-color base0C #ff7eb6; /* Magenta */
+@define-color base0D #42be65; /* Green/Success Status */
+@define-color base0E #be95ff; /* Purple/Primary */
+@define-color base0F #82cfff;
+
+/* Global Reset & Typography */
 * {
   all: unset;
   font-family: "MonaspiceNe Nerd Font", monospace;
+  border-radius: 0;
+  -gtk-outline-radius: 0;
+}
+
+/* Base Classes */
+.container-box {
+  background-color: @base00;
+  border-bottom: 1px solid @base02;
+  min-height: 30px;
+}
+
+/* Spacing & Hierarchy */
+.left-box { margin-left: 16px; }
+.center-box { }
+.right-box { margin-right: 16px; }
+
+.sep { color: @base03; font-size: 14px; }
+.icon { font-size: 16px; margin-right: 8px; }
+
+/* Colors - Functional & Status */
+.date, .volume { color: @base08; } /* Cyan */
+.clock, .battery-normal { color: @base0E; } /* Purple */
+.network { color: @base0C; } /* Magenta/Pink */
+.workspace, .workspace-active { 
+  font-size: 14px; 
+  margin: 0 2px; 
+}
+.workspace { color: @base03; }
+.workspace-active { color: @base0C; }
+
+.battery-low { color: @base0A; } /* Reddish-Pink */
+.battery-charging { color: @base0D; } /* Green */
+
+/* Control Panel (Console) Layout */
+.console-container {
+  background-color: @base00;
+  padding: 24px;
+  border: 1px solid @base03;
+}
+
+.console-header {
+  margin-bottom: 24px;
+}
+
+.console-title {
   font-size: 16px;
   font-weight: bold;
+  letter-spacing: 2px;
+  color: @base05;
 }
 
-/* Oxocarbon Palette */
-/* Base: #161616, Surface: #262626, Overlay: #393939 */
-/* Cyan: #3ddbd9, Green: #42be65, Purple: #be95ff, Pink: #ff7eb6, Teal: #08bdba, Red: #ee5396 */
+.close-btn {
+  color: @base03;
+  padding: 8px;
+}
+.close-btn:hover { color: @base0A; }
 
-.container-box {
-  background-color: #161616;
-  border-bottom: 1px solid #525252;
+/* Elevated Cards */
+.card {
+  background-color: @base01;
+  border: 1px solid @base02;
+  padding: 16px; /* 8px * 2 */
 }
 
-.left-box {
-  margin-left: 15px;
+.card-label {
+  font-size: 11px;
+  font-weight: bold;
+  color: @base03;
+  letter-spacing: 1px;
+  border-left: 2px solid @base0E;
+  padding-left: 8px;
+  margin-bottom: 12px;
+  /* Ensure it has enough space to not truncate */
+  min-width: 100px;
 }
 
-.right-box {
-  margin-right: 15px;
+.muted-label {
+  font-size: 11px;
+  color: @base03;
 }
 
-.date, .volume {
-  color: #3ddbd9;
-}
-
-.clock, .battery-normal {
-  color: #be95ff;
-}
-
-.network, .workspaces {
-  color: #ff7eb6;
-}
-
-.network label:last-child {
-  font-weight: normal;
-}
-
-.sep {
-  color: #525252;
-  margin: 0 10px;
-  font-size: 16px;
-}
-
-.icon {
+.value-text {
   font-size: 14px;
+  color: @base05;
+}
+
+/* Indicators & Sliders (Affordances) */
+trough {
+  background-color: @base02;
+  min-height: 4px;
+}
+
+progress {
+  background-color: @base0E;
+}
+
+slider {
+  background-color: @base0E;
+  min-width: 12px;
+  min-height: 12px;
+}
+
+/* Audio & Slider Spacing */
+.audio-row {
+  margin-top: 8px;
+}
+
+.audio-slider trough {
+  margin: 0 10px;
+}
+
+.brightness-slider trough {
+  margin: 0 10px;
+}
+
+/* System Grid */
+.system-tile {
+  background-color: @base00;
+  border: 1px solid @base02;
+  padding: 12px;
+}
+
+.action-btn {
+  font-size: 11px;
+  color: @base05;
+  border: 1px solid @base03;
+  padding: 4px 10px;
+  background-color: transparent;
+}
+.action-btn:hover {
+  background-color: @base03;
+}
+.action-btn.destructive {
+  color: @base0E; /* Unified with purple accent as requested */
+  border-color: @base0E;
+}
+.action-btn.destructive:hover {
+  background-color: @base0E;
+  color: @base00;
+}
+
+/* Tasks */
+.task-item {
+  background-color: @base00;
+  border: 1px solid @base02;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.task-desc { font-size: 14px; color: @base05; }
+.task-due { font-size: 11px; color: @base03; }
+
+.task-input {
+  background-color: @base00;
+  border: 1px solid @base02;
+  color: @base05;
+  padding: 8px;
   margin-right: 8px;
 }
 
-.workspace {
-  margin: 0 4px;
-  color: #525252;
-  font-size: 14px;
-}
-
-.workspace-active {
-  margin: 0 4px;
-  color: #ff7eb6;
-  font-size: 14px;
-}
-
-.battery-low {
-  color: #ee5396;
-}
-
-.battery-charging {
-  color: #42be65;
+.add-task-btn {
+  background-color: @base0E;
+  color: @base00;
+  padding: 8px 16px;
+  font-weight: bold;
 }

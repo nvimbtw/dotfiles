@@ -1,175 +1,245 @@
 (defwindow console
   :monitor 0
-  :geometry (geometry
-    :x "0px"
-    :y "1px"
-    :width "90%"
-    :height "700px"
-    :anchor "center"  
+  :geometry (geometry 
+    :x "0%"
+    :y "60px" 
+    :width "1200px"
+    :height "0"
+    :anchor "center"
   )
   :stacking "overlay"
-  :exclusive false     
-  :focusable false     
-  :wm-ignore true      
+  :exclusive false
+  :focusable true
+  :wm-ignore false
   :namespace "eww-console"
-  (console-content)
+  (console-main)
 )
 
-(defpoll battery_capacity_graph :interval "30s" "nu ~/.config/eww/scripts/battery_graph.nu capacity 50")
-(defpoll battery_power_graph :interval "30s" "nu ~/.config/eww/scripts/battery_graph.nu power 50")
-(defpoll cpu_graph :interval "10s" "nu ~/.config/eww/scripts/battery_graph.nu cpu 50")
-(defpoll mem_graph :interval "30s" "nu ~/.config/eww/scripts/battery_graph.nu mem 50")
+(defvar task_input "")
+(defpoll tasks :interval "5s" "bash ~/.config/eww/scripts/tasks.sh")
+(defpoll task_progress :interval "5s" "bash ~/.config/eww/scripts/task_progress.sh")
+(defpoll sys_network :interval "30s" "bash ~/.config/eww/scripts/sys_network.sh")
+(defpoll sys_bluetooth :interval "30s" "bash ~/.config/eww/scripts/sys_bluetooth.sh")
+(defpoll sys_brightness :interval "1s" "bash ~/.config/eww/scripts/sys_brightness.sh")
 
-(deflisten sys_stats
-  :initial '{"cpu": 0, "mem": 0, "mem_used_gb": 0, "mem_total_gb": 0}'
-  "nu ~/.config/eww/scripts/sys_stats.nu"
-)
-
-(defwidget console-content []
-  (box
+(defwidget console-main []
+  (box 
+    :class "console-container"
     :orientation "vertical"
-    :class "console-box"
-    :halign "fill"
-    :valign "fill"
     :space-evenly false
-    (box
-      :class "console-header"
-      (label :text "SYSTEM DASHBOARD" :class "console-title")
-    )
-    (box
-      :orientation "vertical"
-      :vexpand true
-      :space-evenly false
-      (scroll
-        :vscroll true
-        :hscroll false
-        :height 380
-        (box
-          :orientation "horizontal"
-          :spacing 40
-          :class "console-body"
-          (battery-view)
-          (system-view)
-        )
+    :spacing 24
+    :vexpand false
+    (console-header)
+    (box 
+      :class "console-body"
+      :orientation "horizontal"
+      :space-evenly true
+      :spacing 24
+      :vexpand false
+      (box 
+        :class "column-left"
+        :orientation "vertical"
+        :space-evenly false
+        :spacing 24
+        :vexpand false
+        (battery-card)
+        (audio-card)
+        (system-card)
       )
-    )
-    ;; Bottom Section: Persistent Large Graphs
-    (box
-      :orientation "vertical"
-      :class "console-footer"
-      :space-evenly false
-      :spacing 10
-      :valign "end"
-      (box
-        :orientation "horizontal"
-        :spacing 20
-        (box
-          :orientation "vertical"
-          :space-evenly false
-          :hexpand true
-          (label :text "Battery Capacity" :halign "start" :class "graph-label")
-          (label :text battery_capacity_graph :halign "fill" :class "graph-text-huge graph-battery")
-        )
-        (box
-          :orientation "vertical"
-          :space-evenly false
-          :hexpand true
-          (label :text "Power Draw" :halign "start" :class "graph-label")
-          (label :text battery_power_graph :halign "fill" :class "graph-text-huge graph-power")
-        )
-      )
-      (box
-        :orientation "horizontal"
-        :spacing 20
-        (box
-          :orientation "vertical"
-          :space-evenly false
-          :hexpand true
-          (label :text "CPU Usage" :halign "start" :class "graph-label")
-          (label :text cpu_graph :halign "fill" :class "graph-text-huge graph-cpu")
-        )
-        (box
-          :orientation "vertical"
-          :space-evenly false
-          :hexpand true
-          (label :text "Memory Usage" :halign "start" :class "graph-label")
-          (label :text mem_graph :halign "fill" :class "graph-text-huge graph-mem")
-        )
+      (box 
+        :class "column-right"
+        :orientation "vertical"
+        :space-evenly false
+        :spacing 24
+        :vexpand true
+        (tasks-card)
       )
     )
   )
 )
 
-(defwidget system-view []
-  (box
-    :orientation "vertical"
-    :class "view-card system-card"
-    :space-evenly false
-    :spacing 20
-    :width 300
-    (box
-      :orientation "vertical"
-      :space-evenly false
-      (label :text "󰻠" :class "cpu-large-icon" :halign "center")
-      (label :text "${sys_stats.cpu}%" :class "battery-large-percent" :halign "center")
-      (label :text "CPU" :class "battery-status-text" :halign "center")
-    )
-    (box
-      :orientation "vertical"
-      :halign "center"
-      :class "battery-info-container"
-      :space-evenly false
-      :spacing 10
-      (info-row :label "Memory" :value "${sys_stats.mem}%")
-      (info-row :label "Used" :value "${sys_stats.mem_used_gb} GB")
-      (info-row :label "Total" :value "${sys_stats.mem_total_gb} GB")
-    )
-  )
-)
-
-(defwidget battery-view []
-  (box
-    :orientation "vertical"
-    :class "view-card battery-card"
-    :space-evenly false
-    :spacing 20
-    :width 300
-    (box
-      :orientation "vertical"
-      :space-evenly false
-      (label :text {battery.icon} :class "battery-large-icon" :halign "center")
-      (label :text "${battery.capacity}%" :class "battery-large-percent" :halign "center")
-      (label :text {battery.status} :class "battery-status-text" :halign "center")
-    )
-    (box
-      :orientation "vertical"
-      :halign "center"
-      :class "battery-info-container"
-      :space-evenly false
-      :spacing 10
-      (info-row :label "Power Draw" :value "${battery.power / 1000000} W")
-      (info-row :label "Power Input" :value "${battery.power_input / 1000000} W")
-      (info-row :label "Remaining" :value {battery.time_left})
-    )
-  )
-)
-
-(defwidget info-row [label value]
-  (box
+(defwidget console-header []
+  (box 
+    :class "console-header"
     :orientation "horizontal"
     :space-evenly false
-    :halign "start"
-    :spacing 10
-    (label :text "${label}:" :class "info-label" :width 120 :halign "start")
-    (label :text value :class "info-value" :halign "start")
+    (label :text "CONTROL PANEL" :class "console-title" :halign "start")
+    (box :hexpand true)
+    (button :class "close-btn" :onclick "eww close console" "󰖭")
+  )
+)
+
+(defwidget battery-card []
+  (box 
+    :class "card"
+    :orientation "vertical"
+    :space-evenly false
+    :spacing 16
+    :vexpand false
+    (box 
+      :class "card-header"
+      :orientation "horizontal"
+      :space-evenly false
+      (label :text "BATTERY" :class "card-label" :halign "start")
+      (box :hexpand true)
+      (label :text "${battery.capacity}%" :class "battery-val-header" :halign "end")
+    )
+    (progress 
+      :class "battery-progress"
+      :value {battery.capacity}
+      :orientation "horizontal")
+    (box 
+      :class "info-grid"
+      :orientation "horizontal"
+      :space-evenly true
+      (box :orientation "vertical" :space-evenly false :spacing 4
+        (info-item :label "STATUS" :value {battery.status})
+        (info-item :label "DRAW" :value "${(battery.power / 1000000)}W"))
+      (box :orientation "vertical" :space-evenly false :spacing 4
+        (info-item :label "TIME LEFT" :value {battery.time_left})
+        (info-item :label "INPUT" :value "${(battery.power_input / 1000000)}W"))
+    )
+  )
+)
+
+(defwidget audio-card []
+  (box 
+    :class "card"
+    :orientation "vertical"
+    :space-evenly false
+    :spacing 16
+    :vexpand false
+    (label :text "AUDIO" :class "card-label" :halign "start")
+    (box 
+      :class "audio-row"
+      :orientation "horizontal"
+      :space-evenly false
+      :spacing 16
+      (button :class "mute-btn" :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" {volume.icon})
+      (box :orientation "vertical" :space-evenly false :spacing 8 :hexpand true
+        (label :text "Default Sink" :class "muted-label" :halign "start")
+        (box :orientation "horizontal" :space-evenly false :spacing 12
+          (scale 
+            :class "audio-slider"
+            :value {volume.vol} 
+            :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
+            :min 0 :max 101 :hexpand true)
+          (label :text {volume.vol} :class "value-text" :width 40 :halign "end")
+        )
+      )
+    )
+  )
+)
+
+(defwidget system-card []
+  (box 
+    :class "card"
+    :orientation "vertical"
+    :space-evenly false
+    :spacing 16
+    :vexpand false
+    (label :text "SYSTEM" :class "card-label" :halign "start")
+    (box 
+      :class "system-grid"
+      :orientation "vertical"
+      :space-evenly false
+      :spacing 16
+      (box :orientation "horizontal" :space-evenly true :spacing 16
+        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
+          (label :text "NETWORK" :class "muted-label" :halign "start")
+          (label :text {sys_network.iface} :class "value-text" :halign "start")
+          (label :text {sys_network.ip} :class "value-text" :halign "start"))
+        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
+          (label :text "BLUETOOTH" :class "muted-label" :halign "start")
+          (label :text {sys_bluetooth.power} :class "value-text" :halign "start")
+          (label :text {sys_bluetooth.device} :class "value-text" :halign "start"))
+      )
+      (box :orientation "horizontal" :space-evenly true :spacing 16
+        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
+          (label :text "DISPLAY" :class "muted-label" :halign "start")
+          (box :orientation "horizontal" :space-evenly false :spacing 12
+            (label :text "${sys_brightness}%" :class "value-text" :width 40)
+            (scale 
+              :class "brightness-slider"
+              :value {sys_brightness} 
+              :onchange "brightnessctl set {}%"
+              :min 0 :max 101 :hexpand true)))
+        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
+          (label :text "ACTIONS" :class "muted-label" :halign "start")
+          (box :class "action-row" :orientation "horizontal" :space-evenly true :spacing 8
+            (button :class "action-btn" :onclick "hyprlock" "LOCK")
+            (button :class "action-btn" :onclick "systemctl suspend" "SLEEP")
+            (button :class "action-btn" :onclick "systemctl hibernate" "HIB")
+            (button :class "action-btn destructive" :onclick "systemctl reboot" "REBOOT")))
+      )
+    )
+  )
+)
+
+(defwidget tasks-card []
+  (box 
+    :class "card"
+    :orientation "vertical"
+    :space-evenly false
+    :spacing 16
+    :vexpand true
+    (box 
+      :class "card-header"
+      :orientation "vertical"
+      :space-evenly false
+      :spacing 8
+      (box 
+        :orientation "horizontal"
+        :space-evenly false
+        (label :text "TASKS" :class "card-label" :halign "start")
+        (box :hexpand true)
+        (label :text "${tasks.length} tasks" :class "muted-label" :halign "end")
+      )
+      (progress 
+        :class "task-progress"
+        :value {task_progress}
+        :orientation "horizontal")
+    )
+    (scroll :vscroll true :hexpand true :vexpand true
+      (box :orientation "vertical" :space-evenly false :spacing 12
+        (label :visible {tasks.length == 0} :text "No pending tasks" :class "muted-label" :valign "center" :halign "center" :vexpand true)
+        (for t in tasks
+          (task-item :id {t.id} :desc {t.description} :due {t.due})
+        )
+      )
+    )
+    (box 
+      :class "task-input-row"
+      :orientation "horizontal"
+      :space-evenly false
+      :spacing 12
+      (input :class "task-input" :value task_input :onchange "eww update task_input={}" :hexpand true)
+      (button :class "add-task-btn" :onclick "bash -c 'task add \"${task_input}\" && eww update task_input=\"\"' && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "ADD")
+    )
+  )
+)
+
+(defwidget task-item [id desc due]
+  (box 
+    :class "task-item"
+    :orientation "horizontal"
+    :space-evenly false
+    :spacing 12
+    (button :class "task-check" :onclick "task ${id} done && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "󰄵")
+    (box :class "task-details" :orientation "vertical" :space-evenly false :spacing 2 :hexpand true
+      (label :text desc :class "task-desc" :halign "start" :wrap true)
+      (label :text {due != "" ? due : ""} :class "task-due" :halign "start" :visible {due != ""}))
+    (button :class "task-del-btn" :onclick "task ${id} delete rc.confirmation=off && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "✕")
   )
 )
 
 (defwidget info-item [label value]
-  (box
+  (box 
+    :class "info-item"
     :orientation "vertical"
     :space-evenly false
-    (label :text label :class "info-label" :halign "start")
-    (label :text value :class "info-value" :halign "start")
+    :spacing 4
+    (label :text label :class "muted-label" :halign "start")
+    (label :text value :class "value-text" :halign "start")
   )
 )
