@@ -35,19 +35,22 @@ def get_battery [prev_energy: int] {
 
     # Calculate time remaining based on actual energy flow
     if $power_now > 0 {
-        if $trend_arrow == $up_arrow {
-            # Charging - time until full
-            let hours = (($energy_full - $energy_now) / $power_now)
-            let mins = (($hours - ($hours | math floor)) * 60 | math round)
-            $time_left_msg = $"($hours | math floor)h ($mins)m ($up_arrow)"
-            $display_time = $" [($hours | math floor)h ($mins)m ($trend_arrow)]"
-            $icon = "󰂄"
+        let total_hours = if $trend_arrow == $up_arrow {
+            (($energy_full - $energy_now) / $power_now)
         } else {
-            # Discharging - time until empty
-            let hours = ($energy_now / $power_now)
-            let mins = (($hours - ($hours | math floor)) * 60 | math round)
-            $time_left_msg = $"($hours | math floor)h ($mins)m ($down_arrow)"
-            $display_time = $" [($hours | math floor)h ($mins)m ($trend_arrow)]"
+            ($energy_now / $power_now)
+        }
+        
+        # Round to nearest minute to avoid "60m" display
+        let total_mins = ($total_hours * 60 | math round)
+        let hours = ($total_mins / 60 | math floor)
+        let mins = ($total_mins mod 60)
+        
+        $time_left_msg = $"($hours)h ($mins)m ($trend_arrow)"
+        $display_time = $" [($hours)h ($mins)m ($trend_arrow)]"
+        
+        if $trend_arrow == $up_arrow {
+            $icon = "󰂄"
         }
     } else {
         # Power now is 0, just show arrow without time
@@ -70,7 +73,7 @@ def get_battery [prev_energy: int] {
         class: $class,
         display: $"($icon) ($capacity)%",
         power: $power_now,
-        power_input: (if $trend_arrow == $up_arrow { $power_now } else { 0 }),
+        power_input: (if $status == "Charging" or $trend_arrow == $up_arrow { $power_now } else { 0 }),
         energy: $energy_now
     })
 

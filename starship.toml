@@ -1,18 +1,46 @@
 # "$schema" = 'https://starship.rs/config-schema.json'
+#
+# Oxocarbon Dark — same language as the eww bar/console and rofi:
+# icon+label pairs split by 󰇝 hairline separators, functional color coding
+# (cyan = location, purple = git/primary, magenta = environment, pink = error).
 
 add_newline = true
+palette = "oxocarbon"
 
 format = """
- $directory\
+ $hostname\
+$directory\
 $git_branch$git_status\
-$c$csharp$dotnet$golang$java$lua$nodejs$php$python$rust$zig$character\
+$c$dotnet$golang$java$lua$nodejs$php$python$rust$zig\
+$cmd_duration\
+$character\
  """
 
-# No right format (removed time and arch logo)
 right_format = ""
 
+[palettes.oxocarbon]
+base00 = "#161616" # Main Background
+base01 = "#262626" # Elevated Surface
+base02 = "#393939" # Selection/Subtle Border
+base03 = "#525252" # Strong Border / Muted
+base05 = "#f2f4f8" # Foreground
+base08 = "#3ddbd9" # Cyan
+base09 = "#78a9ff" # Blue
+base0a = "#ee5396" # Pink/High Status
+base0c = "#ff7eb6" # Magenta
+base0d = "#42be65" # Green/Success Status
+base0e = "#be95ff" # Purple/Primary
+base0f = "#82cfff" # Light Blue
+
+# Only shows over ssh — magenta, like the bar's network segment
+[hostname]
+ssh_only = true
+ssh_symbol = "󰣀 "
+style = "bold fg:base0c"
+format = "[$ssh_symbol$hostname]($style) [󰇝 ](fg:base03)"
+
 [directory]
-style = "bold fg:#3ddbd9"
+style = "bold fg:base08"
 format = "[ $path]($style) "
 truncation_length = 3
 truncation_symbol = "…/"
@@ -20,77 +48,78 @@ read_only = " 󰌾 "
 
 [git_branch]
 symbol = " "
-style = "bold fg:#be95ff"
-format = "[󰇝 ](fg:#525252)[$symbol$branch]($style) "
+style = "bold fg:base0e"
+format = "[󰇝 ](fg:base03)[$symbol$branch]($style) "
 
 [git_status]
 format = "$all_status"
-conflicted = "[ ](fg:#ee5396)"
-ahead = "[⇡ ](fg:#3ddbd9)"
-behind = "[⇣ ](fg:#3ddbd9)"
-diverged = "[⇕ ](fg:#3ddbd9)"
-untracked = "[󱪞 ](fg:#ff7eb6)"
-stashed = "[ ](fg:#42be65)"
-modified = "[ ](fg:#ff7eb6)"
-staged = "[ ](fg:#42be65)"
-renamed = "[ ](fg:#42be65)"
-deleted = "[ ](fg:#ee5396)"
+conflicted = "[ ](fg:base0a)"
+ahead = "[⇡ ](fg:base08)"
+behind = "[⇣ ](fg:base08)"
+diverged = "[⇕ ](fg:base08)"
+untracked = "[󱪞 ](fg:base0c)"
+stashed = "[ ](fg:base0d)"
+modified = "[ ](fg:base0c)"
+staged = "[ ](fg:base0d)"
+renamed = "[ ](fg:base0d)"
+deleted = "[ ](fg:base0a)"
 
 [cmd_duration]
 min_time = 2000
-style = "bold fg:#525252"
-format = "[󰇝 $duration]($style) "
+style = "bold fg:base03"
+format = "[󰇝 ](fg:base03)[󱫑 $duration]($style) "
 
 [character]
-success_symbol = "[󰔰](bold fg:#82cfff)"
-error_symbol = "[󰔰](bold fg:#82cfff)"
+success_symbol = "[󰔰](bold fg:base0f)"
+error_symbol = "[󰔰](bold fg:base0a)"
 
+# Languages — magenta, like the bar's environment info
 [c]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [dotnet]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [golang]
 symbol = "󰟓 "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [java]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [lua]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [nodejs]
 symbol = "󰎙 "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [php]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [python]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
-
-[zig]
-symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
 
 [rust]
 symbol = " "
-style = "bold fg:#ff7eb6"
-format = "[󰇝 ](fg:#525252)[$symbol($version)]($style) "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "
+
+[zig]
+symbol = " "
+style = "bold fg:base0c"
+format = "[󰇝 ](fg:base03)[$symbol($version)]($style) "

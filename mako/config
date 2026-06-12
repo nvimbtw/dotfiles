@@ -1,41 +1,45 @@
 # Font
-font=MonaspiceNe Nerd Font 12
+font=MonaspiceNe Nerd Font Bold 12
 
-# Colors (Oxocarbon Dark)
-background-color=#161616
+# Colors (Oxocarbon Dark base16)
+# Elevation: Using base01 (#262626) for the background to create depth
+background-color=#262626
 text-color=#f2f4f8
 border-color=#525252
 
 # Brutalistic shapes & borders
-border-size=3
+border-size=1
 border-radius=0
 
 # Padding & layout
-margin=10
-padding=12
-width=350
-height=200
+margin=20
+padding=16
+width=400
+height=150
 
 # Eye candy
-progress-color=#08bdba
+progress-color=#be95ff
 icons=1
-max-visible=5
-format=<b>%s</b>\n%b
+icon-location=left
+max-icon-size=48
+max-visible=3
+format=<span color="#be95ff" size="large"><b>%s</b></span>\n%b
 
 # Behavior
-default-timeout=5000
+default-timeout=8000
 ignore-timeout=false
 layer=overlay
 anchor=top-right
 
 [urgency=low]
-format=%s\n%b\n<span color="#525252"><b>─ LOW</b></span>
-border-color=#525252
+border-color=#393939
+format=<span color="#3ddbd9" size="large"><b>%s</b></span>\n%b
 
 [urgency=normal]
-format=%s\n%b\n<span color="#f2f4f8"><b>■ NORMAL</b></span>
 border-color=#525252
+format=<span color="#be95ff" size="large"><b>%s</b></span>\n%b
 
 [urgency=high]
-format=%s\n%b\n<span color="#ee5396"><b>▲ HIGH</b></span>
-border-color=#525252
+border-color=#ee5396
+default-timeout=0
+format=<span color="#ee5396" size="large"><b>%s</b></span>\n%b

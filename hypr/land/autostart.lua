@@ -1,0 +1,25 @@
+hl.on("hyprland.start", function()
+    hl.exec_cmd("vesktop")
+    hl.exec_cmd("gammastep")
+    hl.exec_cmd("mpd")
+    hl.exec_cmd("mako")
+    hl.exec_cmd("wl-paste --type text --watch cliphist store")
+    hl.exec_cmd("wl-paste --type image --watch cliphist store")
+    hl.exec_cmd("rfkill block bluetooth")
+
+    hl.exec_cmd("awww-daemon")
+    hl.timer(function()
+        hl.exec_cmd("awww img ~/Pictures/996764.jpg")
+    end, { timeout = 1000, type = "oneshot" })
+
+    hl.exec_cmd("eww daemon")
+    hl.timer(function()
+        hl.exec_cmd("eww open mainBar")
+    end, { timeout = 1500, type = "oneshot" })
+
+    hl.timer(function()
+        hl.exec_cmd("ghostty")
+    end, { timeout = 2000, type = "oneshot" })
+
+    hl.exec_cmd("nu ~/.config/scripts/sort_downloads.nu >> ~/.local/share/sort-downloads.log 2>&1")
+end)

@@ -30,7 +30,7 @@ body {
     --gap: 12px; /* spacing between panels */
     --divider-thickness: 8px; /* thickness of unread messages divider */
     --message-accent-width: 3px; /* thickness of mention/reply left edge */
-    --border-thickness: 2px; /* thickness of borders around main panels. DOES NOT AFFECT OTHER BORDERS */
+    --border-thickness: 1px; /* thickness of borders around main panels. DOES NOT AFFECT OTHER BORDERS */
     --custom-guild-list-width: calc(var(--guildbar-avatar-size) + var(--custom-guild-list-padding) * 2 + var(--border-thickness) * 2);
 
     /* reduce top forehead spacing to match bottom */
@@ -739,44 +739,51 @@ body {
 }
 
 :root {
-    /* Oxocarbon Dark palette
-     * base00: #161616  base04: #dde1e6
-     * base01: #262626  base05: #f2f4f8
-     * base02: #393939  base06: #ffffff
-     * base03: #525252  base07: #08bdba
-     * base08: #3ddbd9  base09: #78a9ff
-     * base0A: #ee5396  base0B: #33b1ff
-     * base0C: #ff7eb6  base0D: #42be65
-     * base0E: #be95ff  base0F: #82cfff
-     */
+    /* Oxocarbon Dark palette — exact base16 hexes, same as eww.css */
+    --base00: #161616; /* Main Background */
+    --base01: #262626; /* Elevated Surface */
+    --base02: #393939; /* Selection/Subtle Border */
+    --base03: #525252; /* Strong Border */
+    --base04: #dde1e6;
+    --base05: #f2f4f8; /* Foreground */
+    --base06: #ffffff;
+    --base07: #08bdba;
+    --base08: #3ddbd9; /* Cyan */
+    --base09: #78a9ff; /* Blue */
+    --base0A: #ee5396; /* Pink/High Status */
+    --base0B: #33b1ff;
+    --base0C: #ff7eb6; /* Magenta */
+    --base0D: #42be65; /* Green/Success Status */
+    --base0E: #be95ff; /* Purple/Primary */
+    --base0F: #82cfff;
 
     /* text colors */
     --text-0: var(--bg-4); /* text on colored elements */
-    --text-1: oklch(95% 0 0); /* #f2f4f8 - other normally white text */
-    --text-2: oklch(88% 0 0); /* #dde1e6 - headings and important text */
+    --text-1: var(--base05); /* #f2f4f8 - other normally white text */
+    --text-2: var(--base04); /* #dde1e6 - headings and important text */
     --text-3: oklch(78% 0 0); /* normal text */
     --text-4: oklch(62% 0 0); /* #939598 - icon buttons and channels */
     --text-5: oklch(45% 0 0); /* muted channels/chats and timestamps */
 
     /* background and dark colors */
-    --bg-1: oklch(38% 0 0); /* #525252 - dark buttons when clicked */
-    --bg-2: oklch(28% 0 0); /* #393939 - dark buttons */
-    --bg-3: oklch(20% 0 0); /* #262626 - spacing, secondary elements */
-    --bg-4: oklch(14% 0 0); /* #161616 - main background color */
+    --bg-1: var(--base03); /* #525252 - dark buttons when clicked */
+    --bg-2: var(--base02); /* #393939 - dark buttons */
+    --bg-3: var(--base01); /* #262626 - spacing, secondary elements */
+    --bg-4: var(--base00); /* #161616 - main background color */
     --hover: oklch(100% 0 0 / 0.08); /* channels and buttons when hovered */
     --active: oklch(100% 0 0 / 0.16); /* channels and buttons when clicked or selected */
     --active-2: oklch(100% 0 0 / 0.24); /* extra state for transparent buttons */
     --message-hover: oklch(0% 0 0 / 0.1); /* messages when hovered */
 
-    /* accent colors (cyan) */
-    --accent-1: var(--blue-1); /* links and other accent text */
-    --accent-2: var(--blue-2); /* small accent elements */
-    --accent-3: var(--blue-3); /* accent buttons */
-    --accent-4: var(--blue-4); /* accent buttons when hovered */
-    --accent-5: var(--blue-5); /* accent buttons when clicked */
-    --accent-new: var(--blue-2); /* stuff that's normally red like mute/deafen buttons */
-    --mention: linear-gradient(to right, color-mix(in oklch, var(--blue-2), transparent 90%) 40%, transparent); /* background of messages that mention you */
-    --mention-hover: linear-gradient(to right, color-mix(in oklch, var(--blue-2), transparent 95%) 40%, transparent); /* background of messages that mention you when hovered */
+    /* accent colors (purple base0E — the system's primary, like rofi/console) */
+    --accent-1: var(--purple-1); /* links and other accent text */
+    --accent-2: var(--purple-2); /* small accent elements */
+    --accent-3: var(--purple-3); /* accent buttons */
+    --accent-4: var(--purple-4); /* accent buttons when hovered */
+    --accent-5: var(--purple-5); /* accent buttons when clicked */
+    --accent-new: var(--red-2); /* stuff that's normally red like mute/deafen buttons — pink, the system's high-status color */
+    --mention: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 90%) 40%, transparent); /* background of messages that mention you */
+    --mention-hover: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 95%) 40%, transparent); /* background of messages that mention you when hovered */
     --reply: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 90%) 40%, transparent); /* background of messages that reply to you */
     --reply-hover: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 95%) 40%, transparent); /* background of messages that reply to you when hovered */
 
@@ -787,41 +794,41 @@ body {
     --streaming: var(--purple-2); /* #be95ff */
     --offline: var(--text-4); /* default offline color */
 
-    /* border colors */
-    --border-light: oklch(100% 0 0 / 0.08); /* light border color */
-    --border: oklch(100% 0 0 / 0.16); /* normal border color */
-    --button-border: oklch(100% 0 0 / 0.1); /* neutral border color of buttons */
+    /* border colors — solid base02 hairlines, same as the eww console/rofi */
+    --border-light: var(--base01); /* light border color */
+    --border: var(--base02); /* normal border color */
+    --button-border: var(--base02); /* neutral border color of buttons */
 
-    /* base colors - Oxocarbon palette */
-    --red-1: oklch(76% 0.18 350); /* pink - critical */
-    --red-2: oklch(70% 0.18 350); /* #ee5396 */
-    --red-3: oklch(64% 0.18 350);
-    --red-4: oklch(58% 0.18 350);
-    --red-5: oklch(52% 0.18 350);
+    /* base colors - Oxocarbon palette, ramps anchored on exact hexes */
+    --red-2: var(--base0A); /* #ee5396 - pink - critical */
+    --red-1: color-mix(in oklch, var(--red-2), white 12%);
+    --red-3: color-mix(in oklch, var(--red-2), black 12%);
+    --red-4: color-mix(in oklch, var(--red-2), black 24%);
+    --red-5: color-mix(in oklch, var(--red-2), black 36%);
 
-    --green-1: oklch(76% 0.16 145); /* green - positive */
-    --green-2: oklch(70% 0.16 145); /* #42be65 */
-    --green-3: oklch(64% 0.16 145);
-    --green-4: oklch(58% 0.16 145);
-    --green-5: oklch(52% 0.16 140);
+    --green-2: var(--base0D); /* #42be65 - green - positive */
+    --green-1: color-mix(in oklch, var(--green-2), white 12%);
+    --green-3: color-mix(in oklch, var(--green-2), black 12%);
+    --green-4: color-mix(in oklch, var(--green-2), black 24%);
+    --green-5: color-mix(in oklch, var(--green-2), black 36%);
 
-    --blue-1: oklch(76% 0.14 190); /* cyan - accent */
-    --blue-2: oklch(70% 0.14 190); /* #3ddbd9 / #08bdba */
-    --blue-3: oklch(64% 0.14 190);
-    --blue-4: oklch(58% 0.14 190);
-    --blue-5: oklch(52% 0.14 190);
+    --blue-2: var(--base08); /* #3ddbd9 - cyan - functional */
+    --blue-1: color-mix(in oklch, var(--blue-2), white 12%);
+    --blue-3: color-mix(in oklch, var(--blue-2), black 12%);
+    --blue-4: color-mix(in oklch, var(--blue-2), black 24%);
+    --blue-5: color-mix(in oklch, var(--blue-2), black 36%);
 
-    --yellow-1: oklch(76% 0.14 250); /* blue - warning */
-    --yellow-2: oklch(70% 0.14 250); /* #78a9ff */
-    --yellow-3: oklch(64% 0.14 250);
-    --yellow-4: oklch(58% 0.14 250);
-    --yellow-5: oklch(52% 0.14 250);
+    --yellow-2: var(--base09); /* #78a9ff - blue - warning */
+    --yellow-1: color-mix(in oklch, var(--yellow-2), white 12%);
+    --yellow-3: color-mix(in oklch, var(--yellow-2), black 12%);
+    --yellow-4: color-mix(in oklch, var(--yellow-2), black 24%);
+    --yellow-5: color-mix(in oklch, var(--yellow-2), black 36%);
 
-    --purple-1: oklch(76% 0.14 275); /* purple - streaming */
-    --purple-2: oklch(70% 0.14 275); /* #be95ff */
-    --purple-3: oklch(64% 0.14 275);
-    --purple-4: oklch(58% 0.14 275);
-    --purple-5: oklch(52% 0.14 275);
+    --purple-2: var(--base0E); /* #be95ff - purple - primary/streaming */
+    --purple-1: color-mix(in oklch, var(--purple-2), white 12%);
+    --purple-3: color-mix(in oklch, var(--purple-2), black 12%);
+    --purple-4: color-mix(in oklch, var(--purple-2), black 24%);
+    --purple-5: color-mix(in oklch, var(--purple-2), black 36%);
 }
 
 @container root style(--colors: on) {
@@ -837,8 +844,8 @@ body {
         --background-base-lowest: var(--bg-4);
         --background-brand: var(--accent-2);
         --background-code: var(--bg-3);
-        --background-code-addition: lime;
-        --background-code-deletion: blue;
+        --background-code-addition: color-mix(in oklch, var(--base0D), transparent 85%);
+        --background-code-deletion: color-mix(in oklch, var(--base0A), transparent 85%);
         --background-feedback-critical: color-mix(in hsl, var(--red-2), transparent 80%);
         --background-feedback-info: color-mix(in hsl, var(--blue-2), transparent 80%);
         --background-feedback-positive: color-mix(in hsl, var(--green-2), transparent 80%);
@@ -1116,8 +1123,8 @@ body {
         --input-border-error-hover: blue;
         --input-border-hover: var(--border);
         --input-border-readonly: red;
-        --input-foreground-placeholder: yellow;
-        --input-icon-default: lime;
+        --input-foreground-placeholder: var(--text-5);
+        --input-icon-default: var(--text-4);
         --input-placeholder-text-default: var(--text-5);
         --input-text-default: var(--text-3);
         --input-text-error-default: var(--text-3);
@@ -1186,10 +1193,10 @@ body {
         --redesign-button-active-background: red;
         --redesign-button-active-pressed-background: yellow;
         --redesign-button-active-text: lime;
-        --redesign-button-danger-background: blue;
-        --redesign-button-destructive-background: magenta;
-        --redesign-button-destructive-pressed-background: red;
-        --redesign-button-destructive-text: yellow;
+        --redesign-button-danger-background: var(--red-3);
+        --redesign-button-destructive-background: var(--red-3);
+        --redesign-button-destructive-pressed-background: var(--red-5);
+        --redesign-button-destructive-text: var(--text-0);
         --redesign-button-overlay-alpha-background: hsl(0, 0%, 0%, 0.5);
         --redesign-button-overlay-alpha-pressed-background: hsl(0, 0%, 0%, 0.7);
         --redesign-button-overlay-alpha-text: var(--text-3);
@@ -1199,12 +1206,12 @@ body {
         --redesign-button-premium-primary-purple-for-gradient: blue;
         --redesign-button-premium-primary-purple-for-gradient-2: magenta;
         --redesign-button-primary-alt-border: red;
-        --redesign-button-primary-background: yellow;
+        --redesign-button-primary-background: var(--accent-3);
         --redesign-button-primary-overlay-background: lime;
         --redesign-button-primary-overlay-pressed-background: blue;
         --redesign-button-primary-overlay-text: magenta;
-        --redesign-button-primary-pressed-background: red;
-        --redesign-button-primary-text: yellow;
+        --redesign-button-primary-pressed-background: var(--accent-5);
+        --redesign-button-primary-text: var(--text-0);
         --redesign-button-secondary-background: var(--bg-2);
         --redesign-button-secondary-border: blue;
         --redesign-button-secondary-overlay-background: magenta;
@@ -1227,9 +1234,9 @@ body {
     --scrollbar-thin-thumb: var(--accent-2);
     --scrollbar-thin-track: transparent;
         --spine-default: var(--text-5);
-        --spoiler-hidden-background: yellow;
-        --spoiler-hidden-background-hover: lime;
-        --spoiler-revealed-background: blue;
+        --spoiler-hidden-background: var(--bg-2);
+        --spoiler-hidden-background-hover: var(--bg-1);
+        --spoiler-revealed-background: var(--bg-3);
         --status-danger: var(--red-2);
         --status-online: var(--green-2);
         --status-positive: var(--green-2);
@@ -1253,18 +1260,18 @@ body {
         --switch-thumb-icon-active: blue;
         --switch-thumb-icon-default: magenta;
         --text-brand: var(--accent-1);
-        --text-code: red;
-        --text-code-addition: yellow;
-        --text-code-builtin: lime;
-        --text-code-bullet: blue;
-        --text-code-comment: magenta;
-        --text-code-deletion: red;
-        --text-code-keyword: yellow;
-        --text-code-section: lime;
-        --text-code-string: blue;
-        --text-code-tag: magenta;
-        --text-code-title: red;
-        --text-code-variable: yellow;
+        --text-code: var(--base05);
+        --text-code-addition: var(--base0D);
+        --text-code-builtin: var(--base0C);
+        --text-code-bullet: var(--base03);
+        --text-code-comment: var(--base03);
+        --text-code-deletion: var(--base0A);
+        --text-code-keyword: var(--base0E);
+        --text-code-section: var(--base0D);
+        --text-code-string: var(--base0B);
+        --text-code-tag: var(--base09);
+        --text-code-title: var(--base0D);
+        --text-code-variable: var(--base08);
         --text-default: var(--text-3);
         --text-feedback-critical: var(--red-1);
         --text-feedback-info: var(--accent-1);

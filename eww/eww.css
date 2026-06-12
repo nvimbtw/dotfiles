@@ -1,70 +1,240 @@
+/* 
+ * Oxocarbon Dark (base16) Brutalist Styling 
+ * Following Kole Jain's UI/UX principles.
+ */
+
+/* Palette */
+@define-color base00 #161616; /* Main Background */
+@define-color base01 #262626; /* Elevated Surface */
+@define-color base02 #393939; /* Selection/Subtle Border */
+@define-color base03 #525252; /* Strong Border */
+@define-color base04 #dde1e6;
+@define-color base05 #f2f4f8; /* Foreground */
+@define-color base06 #ffffff;
+@define-color base07 #08bdba;
+@define-color base08 #3ddbd9; /* Cyan */
+@define-color base09 #78a9ff;
+@define-color base0A #ee5396; /* Pink/High Status */
+@define-color base0B #33b1ff;
+@define-color base0C #ff7eb6; /* Magenta */
+@define-color base0D #42be65; /* Green/Success Status */
+@define-color base0E #be95ff; /* Purple/Primary */
+@define-color base0F #82cfff;
+
+/* Global Reset & Typography */
 * {
   all: unset;
   font-family: "MonaspiceNe Nerd Font", monospace;
+  border-radius: 0;
+  -gtk-outline-radius: 0;
+}
+
+/* Base Classes */
+.container-box {
+  background-color: @base00;
+  border-bottom: 1px solid @base02;
+  min-height: 30px;
+}
+
+/* Spacing & Hierarchy */
+.left-box { margin-left: 16px; }
+.center-box { }
+.right-box { margin-right: 16px; }
+
+.sep { color: @base03; font-size: 14px; }
+.icon { font-size: 16px; margin-right: 8px; }
+
+/* Colors - Functional & Status */
+.date, .volume { color: @base08; } /* Cyan */
+.clock, .keyboard { color: @base0E; } /* Purple */
+.network { color: @base0C; } /* Magenta/Pink */
+.battery-normal { color: @base09; } /* Blue */
+.workspace, .workspace-active { 
+  font-size: 14px; 
+  margin: 0 2px; 
+}
+.workspace { color: @base03; }
+.workspace-active { color: @base0C; }
+
+.battery-low { color: @base0A; } /* Reddish-Pink */
+.battery-charging { color: @base0D; } /* Green */
+
+/* Control Panel (Console)
+ * Same language as the bar: flat @base00 surfaces, 1px @base02 hairlines,
+ * icon+label pairs, and the bar's functional color coding.
+ */
+.console-container {
+  background-color: @base00;
+  border: 1px solid @base02;
+}
+
+/* Header strip — visually a clone of the mainbar */
+.console-header {
+  background-color: @base00;
+  border-bottom: 1px solid @base02;
+  padding: 8px 16px;
+  min-height: 30px;
+}
+
+.console-title { color: @base0E; }
+.console-title label { font-weight: bold; }
+
+.close-btn {
+  color: @base03;
+  font-size: 16px;
+  padding: 0 8px;
+}
+.close-btn:hover { color: @base0A; }
+
+.console-body {
+  padding: 16px;
+}
+
+/* Cards — flat, hairline-bordered, no elevation */
+.card {
+  background-color: @base00;
+  border: 1px solid @base02;
+  padding: 16px;
+}
+
+.card-title label {
+  font-size: 11px;
+  font-weight: bold;
+}
+.card-title .icon { font-size: 14px; }
+
+/* Functional accents, matching the bar */
+.accent-battery { color: @base09; } /* Blue, like .battery-normal */
+.accent-audio   { color: @base08; } /* Cyan, like .volume */
+.accent-system  { color: @base0C; } /* Magenta, like .network */
+.accent-tasks   { color: @base0E; } /* Purple, like .clock */
+
+.value-big {
   font-size: 16px;
   font-weight: bold;
 }
 
-/* Oxocarbon Palette */
-/* Base: #161616, Surface: #262626, Overlay: #393939 */
-/* Cyan: #3ddbd9, Green: #42be65, Purple: #be95ff, Pink: #ff7eb6, Teal: #08bdba, Red: #ee5396 */
-
-.container-box {
-  background-color: #161616;
-  border-bottom: 1px solid #525252;
+.muted-label {
+  font-size: 11px;
+  color: @base03;
 }
 
-.left-box {
-  margin-left: 15px;
+.value-text {
+  font-size: 14px;
+  color: @base05;
 }
 
-.right-box {
-  margin-right: 15px;
+/* Indicators & Sliders */
+trough {
+  background-color: @base02;
+  min-height: 4px;
 }
 
-.date, .volume {
-  color: #3ddbd9;
+progress {
+  background-color: @base0E;
 }
 
-.clock, .battery-normal {
-  color: #be95ff;
+slider {
+  background-color: @base05;
+  min-width: 4px;
+  min-height: 12px;
 }
 
-.network, .workspaces {
-  color: #ff7eb6;
-}
+.battery-progress progress { background-color: @base09; }
+.task-progress progress    { background-color: @base0E; }
 
-.network label:last-child {
-  font-weight: normal;
-}
+.audio-slider highlight      { background-color: @base08; }
+.audio-slider slider         { background-color: @base08; }
+.brightness-slider highlight { background-color: @base0F; }
+.brightness-slider slider    { background-color: @base0F; }
 
-.sep {
-  color: #525252;
-  margin: 0 10px;
+.mute-btn {
   font-size: 16px;
+  color: @base08;
+  border: 1px solid @base02;
+  padding: 8px 12px;
+}
+.mute-btn:hover { border-color: @base08; }
+
+/* System Grid */
+.system-tile {
+  background-color: @base00;
+  border: 1px solid @base02;
+  padding: 12px;
 }
 
-.icon {
+.tile-title label {
+  font-size: 11px;
+  font-weight: bold;
+}
+.tile-title .icon { font-size: 13px; }
+
+.tile-network   { color: @base0C; } /* Magenta, like .network */
+.tile-bluetooth { color: @base09; } /* Blue, like bluetooth battery */
+.tile-display   { color: @base0F; }
+.tile-actions   { color: @base0E; }
+
+.action-btn {
+  font-size: 10px;
+  color: @base05;
+  border: 1px solid @base03;
+  padding: 4px 2px;
+  background-color: transparent;
+}
+.action-btn:hover {
+  background-color: @base03;
+}
+.action-btn.destructive {
+  color: @base0E; /* Unified with purple accent as requested */
+  border-color: @base0E;
+}
+.action-btn.destructive:hover {
+  background-color: @base0E;
+  color: @base00;
+}
+
+/* Tasks */
+.task-item {
+  background-color: @base00;
+  border: 1px solid @base02;
+  padding: 8px 12px;
+}
+
+.task-check {
   font-size: 14px;
-  margin-right: 8px;
+  color: @base03;
+  padding: 0 4px;
 }
+.task-check:hover { color: @base0D; }
 
-.workspace {
-  margin: 0 4px;
-  color: #525252;
+.task-del-btn {
   font-size: 14px;
+  color: @base03;
+  padding: 0 4px;
 }
+.task-del-btn:hover { color: @base0A; }
 
-.workspace-active {
-  margin: 0 4px;
-  color: #ff7eb6;
-  font-size: 14px;
+.task-desc { font-size: 14px; color: @base05; }
+.task-due { font-size: 11px; color: @base03; }
+
+.task-input {
+  background-color: @base00;
+  border: 1px solid @base02;
+  color: @base05;
+  padding: 8px;
+  caret-color: @base0E;
 }
+.task-input:focus { border-color: @base0E; }
 
-.battery-low {
-  color: #ee5396;
+.add-task-btn {
+  font-size: 11px;
+  font-weight: bold;
+  color: @base0E;
+  border: 1px solid @base0E;
+  padding: 8px 16px;
+  background-color: transparent;
 }
-
-.battery-charging {
-  color: #42be65;
+.add-task-btn:hover {
+  background-color: @base0E;
+  color: @base00;
 }
