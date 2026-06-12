@@ -7,12 +7,10 @@ print_volume() {
 
     # Extract the volume number (e.g., "Volume: 0.30" -> 30)
     vol=$(echo "$vol_output" | awk '{printf "%.0f", $2 * 100}')
-
-    # Check if muted
-    muted=$(echo "$vol_output" | grep "MUTED" && echo "yes" || echo "no")
+    vol=${vol:-0}
 
     # check for muting and volume levels
-    if [ "$muted" = "yes" ] || [ "$vol" -eq 0 ]; then
+    if echo "$vol_output" | grep -q "MUTED" || [ "$vol" -eq 0 ]; then
         icon="󰝟"   # muted
     elif [ "$vol" -le 30 ]; then
         icon="󰕿"   # low
@@ -22,7 +20,8 @@ print_volume() {
         icon="󰕾"   # high
     fi
 
-    echo "{\"icon\": \"$icon\", \"vol\": \"$vol%\"}"
+    # vol is display text, level is numeric for sliders
+    echo "{\"icon\": \"$icon\", \"vol\": \"$vol%\", \"level\": $vol}"
 }
 
 # Print initial value

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Check bluetooth power state
-POWER=$(bluetoothctl show | grep "Powered: yes" > /dev/null && echo "On" || echo "Off")
+POWER=$(bluetoothctl show 2>/dev/null | grep -q "Powered: yes" && echo "On" || echo "Off")
 
-# Get connected device
-DEVICE=$(bluetoothctl devices Connected | awk '{print $2 " " $3}' | head -n1)
+# Full name of the first connected device (fields 3+ — field 2 is the MAC)
+DEVICE=$(bluetoothctl devices Connected 2>/dev/null | head -n1 | cut -d' ' -f3-)
 if [ -z "$DEVICE" ]; then
     DEVICE="None"
 fi

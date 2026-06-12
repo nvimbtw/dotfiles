@@ -1,8 +1,8 @@
 (defwindow console
   :monitor 0
-  :geometry (geometry 
+  :geometry (geometry
     :x "0%"
-    :y "60px" 
+    :y "60px"
     :width "1200px"
     :height "0"
     :anchor "center"
@@ -23,34 +23,33 @@
 (defpoll sys_brightness :interval "1s" "bash ~/.config/eww/scripts/sys_brightness.sh")
 
 (defwidget console-main []
-  (box 
+  (box
     :class "console-container"
     :orientation "vertical"
     :space-evenly false
-    :spacing 24
     :vexpand false
     (console-header)
-    (box 
+    (box
       :class "console-body"
       :orientation "horizontal"
       :space-evenly true
-      :spacing 24
+      :spacing 16
       :vexpand false
-      (box 
+      (box
         :class "column-left"
         :orientation "vertical"
         :space-evenly false
-        :spacing 24
+        :spacing 16
         :vexpand false
         (battery-card)
         (audio-card)
         (system-card)
       )
-      (box 
+      (box
         :class "column-right"
         :orientation "vertical"
         :space-evenly false
-        :spacing 24
+        :spacing 16
         :vexpand true
         (tasks-card)
       )
@@ -58,73 +57,90 @@
   )
 )
 
+;; Header strip mirrors the mainbar: icon+label pairs split by 󰇝 separators
 (defwidget console-header []
-  (box 
+  (box
     :class "console-header"
     :orientation "horizontal"
     :space-evenly false
-    (label :text "CONTROL PANEL" :class "console-title" :halign "start")
+    :spacing 16
+    (label-with-icon :icon "󰆍" :text "CONSOLE" :class "console-title")
+    (label :class "sep" :text "󰇝")
+    (label-with-icon :icon {clock.icon} :text {clock.time} :class "clock")
+    (label :class "sep" :text "󰇝")
+    (label-with-icon :icon {date_time.icon} :text {date_time.date} :class "date")
     (box :hexpand true)
     (button :class "close-btn" :onclick "eww close console" "󰖭")
   )
 )
 
+(defwidget card-title [icon text accent]
+  (box
+    :class "card-title ${accent}"
+    :orientation "horizontal"
+    :space-evenly false
+    :halign "start"
+    (label :class "icon" :text icon)
+    (label :text text)
+  )
+)
+
 (defwidget battery-card []
-  (box 
+  (box
     :class "card"
     :orientation "vertical"
     :space-evenly false
     :spacing 16
     :vexpand false
-    (box 
+    (box
       :class "card-header"
       :orientation "horizontal"
       :space-evenly false
-      (label :text "BATTERY" :class "card-label" :halign "start")
+      (card-title :icon {battery.icon} :text "BATTERY" :accent "accent-battery")
       (box :hexpand true)
-      (label :text "${battery.capacity}%" :class "battery-val-header" :halign "end")
+      (label :text "${battery.capacity}%" :class "accent-battery value-big" :halign "end")
     )
-    (progress 
+    (progress
       :class "battery-progress"
       :value {battery.capacity}
       :orientation "horizontal")
-    (box 
+    (box
       :class "info-grid"
       :orientation "horizontal"
       :space-evenly true
       (box :orientation "vertical" :space-evenly false :spacing 4
         (info-item :label "STATUS" :value {battery.status})
-        (info-item :label "DRAW" :value "${(battery.power / 1000000)}W"))
+        (info-item :label "DRAW" :value "${round(battery.power / 1000000, 1)}W"))
       (box :orientation "vertical" :space-evenly false :spacing 4
         (info-item :label "TIME LEFT" :value {battery.time_left})
-        (info-item :label "INPUT" :value "${(battery.power_input / 1000000)}W"))
+        (info-item :label "INPUT" :value "${round(battery.power_input / 1000000, 1)}W"))
     )
   )
 )
 
 (defwidget audio-card []
-  (box 
+  (box
     :class "card"
     :orientation "vertical"
     :space-evenly false
     :spacing 16
     :vexpand false
-    (label :text "AUDIO" :class "card-label" :halign "start")
-    (box 
+    (card-title :icon {volume.icon} :text "AUDIO" :accent "accent-audio")
+    (box
       :class "audio-row"
       :orientation "horizontal"
       :space-evenly false
       :spacing 16
       (button :class "mute-btn" :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" {volume.icon})
       (box :orientation "vertical" :space-evenly false :spacing 8 :hexpand true
-        (label :text "Default Sink" :class "muted-label" :halign "start")
+        (label :text "DEFAULT SINK" :class "muted-label" :halign "start")
         (box :orientation "horizontal" :space-evenly false :spacing 12
-          (scale 
+          (scale
             :class "audio-slider"
-            :value {volume.vol} 
+            :value {volume.level}
             :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
             :min 0 :max 101 :hexpand true)
-          (label :text {volume.vol} :class "value-text" :width 40 :halign "end")
+          (label :text {volume.vol} :class "accent-audio value-text" :width 40 :halign "end")
         )
       )
     )
@@ -132,83 +148,97 @@
 )
 
 (defwidget system-card []
-  (box 
+  (box
     :class "card"
     :orientation "vertical"
     :space-evenly false
     :spacing 16
     :vexpand false
-    (label :text "SYSTEM" :class "card-label" :halign "start")
-    (box 
+    (card-title :icon "󰒓" :text "SYSTEM" :accent "accent-system")
+    (box
       :class "system-grid"
       :orientation "vertical"
       :space-evenly false
-      :spacing 16
-      (box :orientation "horizontal" :space-evenly true :spacing 16
+      :spacing 12
+      (box :orientation "horizontal" :space-evenly true :spacing 12
         (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
-          (label :text "NETWORK" :class "muted-label" :halign "start")
-          (label :text {sys_network.iface} :class "value-text" :halign "start")
-          (label :text {sys_network.ip} :class "value-text" :halign "start"))
+          (tile-title :icon "󰤨" :text "NETWORK" :accent "tile-network")
+          (label :text {sys_network.conn} :class "value-text" :halign "start")
+          (label :text "${sys_network.iface} 󰇝 ${sys_network.ip}" :class "muted-label" :halign "start"))
         (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
-          (label :text "BLUETOOTH" :class "muted-label" :halign "start")
+          (tile-title :icon "󰂯" :text "BLUETOOTH" :accent "tile-bluetooth")
           (label :text {sys_bluetooth.power} :class "value-text" :halign "start")
-          (label :text {sys_bluetooth.device} :class "value-text" :halign "start"))
+          (label :text {sys_bluetooth.device} :class "muted-label" :halign "start"))
       )
-      (box :orientation "horizontal" :space-evenly true :spacing 16
+      (box :orientation "horizontal" :space-evenly true :spacing 12
         (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
-          (label :text "DISPLAY" :class "muted-label" :halign "start")
+          (tile-title :icon "󰃟" :text "DISPLAY" :accent "tile-display")
           (box :orientation "horizontal" :space-evenly false :spacing 12
             (label :text "${sys_brightness}%" :class "value-text" :width 40)
-            (scale 
+            (scale
               :class "brightness-slider"
-              :value {sys_brightness} 
+              :value {sys_brightness}
               :onchange "brightnessctl set {}%"
               :min 0 :max 101 :hexpand true)))
         (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
-          (label :text "ACTIONS" :class "muted-label" :halign "start")
+          (tile-title :icon "󰐥" :text "ACTIONS" :accent "tile-actions")
           (box :class "action-row" :orientation "horizontal" :space-evenly true :spacing 8
-            (button :class "action-btn" :onclick "hyprlock" "LOCK")
-            (button :class "action-btn" :onclick "systemctl suspend" "SLEEP")
-            (button :class "action-btn" :onclick "systemctl hibernate" "HIB")
+            ;; Spawn hyprlock via hyprctl so Hyprland owns the process —
+            ;; spawned directly it dies with the eww daemon (e.g. on reload).
+            ;; Uses the hyprland.lua dispatch syntax (classic "exec" errors).
+            (button :class "action-btn" :onclick "eww close console && hyprctl dispatch 'hl.dsp.exec_cmd(\"hyprlock\")'" "LOCK")
+            (button :class "action-btn" :onclick "eww close console && systemctl suspend" "SLEEP")
+            (button :class "action-btn" :onclick "eww close console && systemctl hibernate" "HIB")
             (button :class "action-btn destructive" :onclick "systemctl reboot" "REBOOT")))
       )
     )
   )
 )
 
+(defwidget tile-title [icon text accent]
+  (box
+    :class "tile-title ${accent}"
+    :orientation "horizontal"
+    :space-evenly false
+    :halign "start"
+    (label :class "icon" :text icon)
+    (label :text text)
+  )
+)
+
 (defwidget tasks-card []
-  (box 
+  (box
     :class "card"
     :orientation "vertical"
     :space-evenly false
     :spacing 16
     :vexpand true
-    (box 
+    (box
       :class "card-header"
       :orientation "vertical"
       :space-evenly false
-      :spacing 8
-      (box 
+      :spacing 12
+      (box
         :orientation "horizontal"
         :space-evenly false
-        (label :text "TASKS" :class "card-label" :halign "start")
+        (card-title :icon "󰄵" :text "TASKS" :accent "accent-tasks")
         (box :hexpand true)
-        (label :text "${tasks.length} tasks" :class "muted-label" :halign "end")
+        (label :text "${arraylength(tasks)} PENDING" :class "muted-label" :halign "end")
       )
-      (progress 
+      (progress
         :class "task-progress"
         :value {task_progress}
         :orientation "horizontal")
     )
     (scroll :vscroll true :hexpand true :vexpand true
-      (box :orientation "vertical" :space-evenly false :spacing 12
-        (label :visible {tasks.length == 0} :text "No pending tasks" :class "muted-label" :valign "center" :halign "center" :vexpand true)
+      (box :orientation "vertical" :space-evenly false :spacing 8
+        (label :visible {arraylength(tasks) == 0} :text "No pending tasks" :class "muted-label" :valign "center" :halign "center" :vexpand true)
         (for t in tasks
           (task-item :id {t.id} :desc {t.description} :due {t.due})
         )
       )
     )
-    (box 
+    (box
       :class "task-input-row"
       :orientation "horizontal"
       :space-evenly false
@@ -220,21 +250,21 @@
 )
 
 (defwidget task-item [id desc due]
-  (box 
+  (box
     :class "task-item"
     :orientation "horizontal"
     :space-evenly false
     :spacing 12
-    (button :class "task-check" :onclick "task ${id} done && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "󰄵")
+    (button :class "task-check" :onclick "task ${id} done && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "󰄰")
     (box :class "task-details" :orientation "vertical" :space-evenly false :spacing 2 :hexpand true
       (label :text desc :class "task-desc" :halign "start" :wrap true)
       (label :text {due != "" ? due : ""} :class "task-due" :halign "start" :visible {due != ""}))
-    (button :class "task-del-btn" :onclick "task ${id} delete rc.confirmation=off && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "✕")
+    (button :class "task-del-btn" :onclick "task ${id} delete rc.confirmation=off && eww update tasks=\"$(bash ~/.config/eww/scripts/tasks.sh)\" && eww update task_progress=\"$(bash ~/.config/eww/scripts/task_progress.sh)\"" "󰖭")
   )
 )
 
 (defwidget info-item [label value]
-  (box 
+  (box
     :class "info-item"
     :orientation "vertical"
     :space-evenly false

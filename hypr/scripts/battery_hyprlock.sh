@@ -9,18 +9,14 @@ fi
 CAPACITY=$(cat /sys/class/power_supply/BAT0/capacity)
 STATUS=$(cat /sys/class/power_supply/BAT0/status)
 
-# Icons
-ICON=" "
+# Same material glyph set as the eww bar (battery.sh)
+ICONS=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
+IDX=$((CAPACITY / 10))
+[ "$IDX" -gt 10 ] && IDX=10
+ICON="${ICONS[$IDX]}"
+
 if [ "$STATUS" = "Charging" ]; then
-    ICON="⚡"
-elif [ "$CAPACITY" -le 10 ]; then
-    ICON=" "
-elif [ "$CAPACITY" -le 30 ]; then
-    ICON=" "
-elif [ "$CAPACITY" -le 60 ]; then
-    ICON=" "
-elif [ "$CAPACITY" -le 90 ]; then
-    ICON=" "
+    ICON="󰂄"
 fi
 
 echo "$ICON $CAPACITY%"

@@ -1,28 +1,32 @@
 configuration {
   modi: "drun,run,window,ssh";
   show-icons: false;
-  display-drun: "APPS";
-  display-run: "RUN";
-  display-window: "WIN";
-  display-ssh: "SSH";
+  display-drun: "󰀻 APPS";
+  display-run: "󰆍 RUN";
+  display-window: "󰖯 WIN";
+  display-ssh: "󰣀 SSH";
   drun-display-format: "{name}";
-  font: "MonaspiceNe Nerd Font Bold 12";
+  font: "MonaspiceNe Nerd Font 12";
 }
 
+/*
+ * Oxocarbon Dark — same language as the bar and console:
+ * flat base00 surfaces, 1px base02 hairlines, purple primary accent.
+ */
 * {
-  /* Oxocarbon Palette */
-  base00: #161616; /* Background */
-  base01: #262626; /* Elevated Surface (Cards) */
-  base02: #393939; /* Subtle Border */
+  base00: #161616; /* Main Background */
+  base01: #262626; /* Elevated Surface */
+  base02: #393939; /* Selection/Subtle Border */
   base03: #525252; /* Strong Border */
   base05: #f2f4f8; /* Foreground */
   base08: #3ddbd9; /* Cyan */
-  base0C: #ff7eb6; /* Magenta (Accent) */
-  base0E: #be95ff; /* Purple (Primary) */
+  base0A: #ee5396; /* Pink/High Status */
+  base0C: #ff7eb6; /* Magenta */
+  base0E: #be95ff; /* Purple/Primary */
 
   background-color: transparent;
   text-color:       @base05;
-  
+
   margin:  0;
   padding: 0;
   spacing: 0;
@@ -32,22 +36,21 @@ window {
   width:            640px;
   background-color: @base00;
   border:           1px;
-  border-color:     @base03; /* Same as .console-container */
+  border-color:     @base02;
+  border-radius:    0;
   location:         center;
   anchor:           center;
-  border-radius:    0;
-  padding:          24px; /* Same as .console-container */
 }
 
 mainbox {
-  children: [ inputbar, listview ];
-  spacing: 24px;
+  children: [ inputbar, message, listview, mode-switcher ];
 }
 
+/* Header strip — mirrors the console/bar header */
 inputbar {
-  padding:          16px;
-  background-color: @base01; /* Elevated like a .card */
-  border:           1px;
+  padding:          12px 16px;
+  background-color: @base00;
+  border:           0 0 1px 0;
   border-color:     @base02;
   children:         [ prompt, entry ];
   spacing:          16px;
@@ -56,48 +59,95 @@ inputbar {
 prompt {
   text-color: @base0E;
   font:       "MonaspiceNe Nerd Font Bold 12";
-  /* Match .console-title letter spacing */
-  letter-spacing: 2px;
 }
 
 entry {
   text-color:        @base05;
-  placeholder:       "SEARCH...";
+  placeholder:       "SEARCH";
   placeholder-color: @base03;
+  cursor-color:      @base0E;
 }
 
+message {
+  padding:          12px 16px;
+  border:           0 0 1px 0;
+  border-color:     @base02;
+}
+
+textbox {
+  text-color: @base03;
+}
+
+/* List — flat hairline tiles, like .task-item */
 listview {
   lines:        8;
   columns:      1;
   fixed-height: false;
-  spacing:      8px; /* Consistent with task items */
+  padding:      16px;
+  spacing:      8px;
+  scrollbar:    false;
 }
 
 element {
-  padding:      12px;
+  padding:          8px 12px;
   background-color: @base00;
   border:           1px;
-  border-color:     @base02; /* Same as .task-item */
+  border-color:     @base02;
+  text-color:       @base05;
 }
 
 element-text {
-  text-color: inherit;
+  text-color:     inherit;
+  vertical-align: 0.5;
 }
 
-element normal.normal {
+element normal.normal, element alternate.normal {
   background-color: @base00;
   text-color:       @base05;
 }
 
 element selected.normal {
-  background-color: @base01;
-  text-color:       @base0C;
-  /* Signifier: Bold Magenta left border like a workspace or card label */
-  border:           1px 1px 1px 4px;
-  border-color:     @base0C;
+  background-color: @base00;
+  border-color:     @base0E;
+  text-color:       @base0E;
 }
 
-element alternate.normal {
+element normal.urgent, element alternate.urgent {
   background-color: @base00;
-  text-color:       @base05;
+  text-color:       @base0A;
+}
+
+element normal.active, element alternate.active {
+  background-color: @base00;
+  text-color:       @base08;
+}
+
+element selected.urgent {
+  background-color: @base00;
+  border-color:     @base0A;
+  text-color:       @base0A;
+}
+
+element selected.active {
+  background-color: @base00;
+  border-color:     @base08;
+  text-color:       @base08;
+}
+
+/* Mode strip — reads like the mainbar */
+mode-switcher {
+  border:       1px 0 0 0;
+  border-color: @base02;
+}
+
+button {
+  padding:    8px 0;
+  text-color: @base03;
+}
+
+button selected {
+  background-color: @base00;
+  text-color:       @base0E;
+  border:           0 0 1px 0;
+  border-color:     @base0E;
 }
