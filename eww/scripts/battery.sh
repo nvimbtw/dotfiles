@@ -65,6 +65,13 @@ def get_battery [prev_energy: int] {
         "battery-normal"
     }
 
+    # power_now is the battery's power flow magnitude; its meaning depends on
+    # direction. Discharging -> power leaving the battery (system draw).
+    # Charging   -> power entering the battery (charge rate, NOT system draw;
+    # true system consumption while on AC needs root-only RAPL, unavailable here).
+    # Split into mutually-exclusive fields so DRAW and INPUT never coincide.
+    let charging = ($trend_arrow == $up_arrow)
+
     let json_output = ({
         capacity: $capacity,
         icon: $icon,
@@ -72,8 +79,8 @@ def get_battery [prev_energy: int] {
         time_left: $time_left_msg,
         class: $class,
         display: $"($icon) ($capacity)%",
-        power: $power_now,
-        power_input: (if $status == "Charging" or $trend_arrow == $up_arrow { $power_now } else { 0 }),
+        power: (if $charging { 0 } else { $power_now }),
+        power_input: (if $charging { $power_now } else { 0 }),
         energy: $energy_now
     })
 

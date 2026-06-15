@@ -74,6 +74,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("chromium"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("eww reload"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("eww open console"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("eww close console"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
 hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("/home/x_x/Downloads/organize_downloads.sh"))
 
