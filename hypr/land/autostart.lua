@@ -9,7 +9,7 @@ hl.on("hyprland.start", function()
 
     hl.exec_cmd("awww-daemon")
     hl.timer(function()
-        hl.exec_cmd("awww img ~/Pictures/996764.jpg")
+        hl.exec_cmd("awww img ~/Pictures/Texturelabs_Glass_132L.jpg")
     end, { timeout = 1000, type = "oneshot" })
 
     hl.exec_cmd("eww daemon")

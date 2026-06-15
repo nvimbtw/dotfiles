@@ -3,5 +3,5 @@
     "minimizeToTray": true,
     "arRPC": true,
     "splashColor": "oklch(0.78 0 0)",
-    "splashBackground": "rgb(22, 22, 22)"
+    "splashBackground": "rgb(24, 22, 22)"
 }

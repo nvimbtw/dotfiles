@@ -1,12 +1,12 @@
-theme = Oxocarbon
-background = #161616
-cursor-color = #3ddbd9
+theme = Kanagawa Dragon
+background = #181616
+cursor-color = #c4b28a
 cursor-style-blink = false
 font-family = MonaspiceNe Nerd Font Mono
 font-feature = +liga, +calt, +ss01, +ss02, +ss03, +ss04, +ss05, +ss06, +ss07, +ss08, +ss09, +ss10
 font-variation = wght=300
 font-variation-bold = wght=600
-font-size = 13
+font-size = 14
 background-opacity = 1
 window-padding-x = 0
 window-padding-y = 0

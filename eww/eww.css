@@ -1,25 +1,26 @@
-/* 
- * Oxocarbon Dark (base16) Brutalist Styling 
- * Following Kole Jain's UI/UX principles.
+/*
+ * Kanagawa Dragon — editorial minimalism.
+ * Borderless slabs, whitespace-driven rhythm, muted warm ink.
+ * Color is used sparingly: foreground reads the content, accents mark state.
  */
 
 /* Palette */
-@define-color base00 #161616; /* Main Background */
-@define-color base01 #262626; /* Elevated Surface */
-@define-color base02 #393939; /* Selection/Subtle Border */
-@define-color base03 #525252; /* Strong Border */
-@define-color base04 #dde1e6;
-@define-color base05 #f2f4f8; /* Foreground */
-@define-color base06 #ffffff;
-@define-color base07 #08bdba;
-@define-color base08 #3ddbd9; /* Cyan */
-@define-color base09 #78a9ff;
-@define-color base0A #ee5396; /* Pink/High Status */
-@define-color base0B #33b1ff;
-@define-color base0C #ff7eb6; /* Magenta */
-@define-color base0D #42be65; /* Green/Success Status */
-@define-color base0E #be95ff; /* Purple/Primary */
-@define-color base0F #82cfff;
+@define-color base00 #181616; /* Main Background */
+@define-color base01 #1D1C19; /* Elevated Surface */
+@define-color base02 #282727; /* Hairline (used sparingly) */
+@define-color base03 #625e5a; /* Muted / secondary ink */
+@define-color base04 #a6a69c; /* Soft ink */
+@define-color base05 #c5c9c5; /* Foreground */
+@define-color base06 #c8c093;
+@define-color base07 #87a987;
+@define-color base08 #8ea4a2; /* Aqua */
+@define-color base09 #8ba4b0; /* Blue */
+@define-color base0A #c4746e; /* Red/High Status */
+@define-color base0B #8ba4b0;
+@define-color base0C #b6927b; /* Orange/Network */
+@define-color base0D #87a987; /* Green/Success Status */
+@define-color base0E #c4b28a; /* Sand/Primary */
+@define-color base0F #949fb5; /* Teal/Brightness */
 
 /* Global Reset & Typography */
 * {
@@ -29,51 +30,60 @@
   -gtk-outline-radius: 0;
 }
 
-/* Base Classes */
+/* ───────────────────────────────────────────────────────────
+ * BAR
+ * A single borderless line. Segments breathe on whitespace,
+ * parted only by a faint middot.
+ * ─────────────────────────────────────────────────────────── */
 .container-box {
   background-color: @base00;
-  border-bottom: 1px solid @base02;
   min-height: 30px;
 }
 
-/* Spacing & Hierarchy */
-.left-box { margin-left: 16px; }
+.left-box { margin-left: 22px; }
 .center-box { }
-.right-box { margin-right: 16px; }
+.right-box { margin-right: 22px; }
 
-.sep { color: @base03; font-size: 14px; }
-.icon { font-size: 16px; margin-right: 8px; }
-
-/* Colors - Functional & Status */
-.date, .volume { color: @base08; } /* Cyan */
-.clock, .keyboard { color: @base0E; } /* Purple */
-.network { color: @base0C; } /* Magenta/Pink */
-.battery-normal { color: @base09; } /* Blue */
-.workspace, .workspace-active { 
-  font-size: 14px; 
-  margin: 0 2px; 
+/* thin column rule — distinct from the round state dots */
+.sep {
+  color: @base02;
+  font-size: 14px;
 }
-.workspace { color: @base03; }
-.workspace-active { color: @base0C; }
 
-.battery-low { color: @base0A; } /* Reddish-Pink */
-.battery-charging { color: @base0D; } /* Green */
+.icon {
+  font-size: 15px;
+  margin-right: 8px;
+}
 
-/* Control Panel (Console)
- * Same language as the bar: flat @base00 surfaces, 1px @base02 hairlines,
- * icon+label pairs, and the bar's functional color coding.
- */
+/* Functional ink — muted Kanagawa tones, low contrast on purpose */
+.date, .volume { color: @base08; }   /* aqua */
+.clock, .keyboard { color: @base0E; } /* sand */
+.network { color: @base0C; }          /* orange */
+.battery-normal { color: @base09; }   /* blue */
+.battery-low { color: @base0A; }      /* red */
+.battery-charging { color: @base0D; } /* green */
+
+/* Workspaces — a quiet dot rail: filled accent for here, faint dot elsewhere */
+.workspace, .workspace-active {
+  margin: 0 3px;
+}
+.workspace { color: @base03; font-size: 9px; }
+.workspace-active { color: @base0C; font-size: 13px; }
+
+/* ───────────────────────────────────────────────────────────
+ * CONSOLE
+ * A solid borderless slab. Sections are set apart by a small
+ * uppercase eyebrow label and generous air — no card chrome.
+ * A single hairline under the header acts as a masthead rule.
+ * ─────────────────────────────────────────────────────────── */
 .console-container {
   background-color: @base00;
-  border: 1px solid @base02;
 }
 
-/* Header strip — visually a clone of the mainbar */
 .console-header {
   background-color: @base00;
   border-bottom: 1px solid @base02;
-  padding: 8px 16px;
-  min-height: 30px;
+  padding: 18px 32px;
 }
 
 .console-title { color: @base0E; }
@@ -82,36 +92,33 @@
 .close-btn {
   color: @base03;
   font-size: 16px;
-  padding: 0 8px;
+  padding: 0 6px;
 }
 .close-btn:hover { color: @base0A; }
 
 .console-body {
-  padding: 16px;
+  padding: 32px;
 }
 
-/* Cards — flat, hairline-bordered, no elevation */
+/* Cards are invisible — just spacing and a labelled section */
 .card {
-  background-color: @base00;
-  border: 1px solid @base02;
-  padding: 16px;
+  background-color: transparent;
 }
 
+/* Eyebrow label: small, uppercase, set in the section's accent */
 .card-title label {
   font-size: 11px;
   font-weight: bold;
 }
-.card-title .icon { font-size: 14px; }
+.card-title .icon { font-size: 13px; margin-right: 6px; }
 
-/* Functional accents, matching the bar */
-.accent-battery { color: @base09; } /* Blue, like .battery-normal */
-.accent-audio   { color: @base08; } /* Cyan, like .volume */
-.accent-system  { color: @base0C; } /* Magenta, like .network */
-.accent-tasks   { color: @base0E; } /* Purple, like .clock */
+.accent-battery { color: @base09; }
+.accent-audio   { color: @base08; }
+.accent-system  { color: @base0C; }
+.accent-tasks   { color: @base0E; }
 
 .value-big {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
 }
 
 .muted-label {
@@ -124,10 +131,10 @@
   color: @base05;
 }
 
-/* Indicators & Sliders */
+/* Indicators & sliders — hairline-thin, square */
 trough {
   background-color: @base02;
-  min-height: 4px;
+  min-height: 2px;
 }
 
 progress {
@@ -136,8 +143,8 @@ progress {
 
 slider {
   background-color: @base05;
-  min-width: 4px;
-  min-height: 12px;
+  min-width: 3px;
+  min-height: 14px;
 }
 
 .battery-progress progress { background-color: @base09; }
@@ -148,93 +155,91 @@ slider {
 .brightness-slider highlight { background-color: @base0F; }
 .brightness-slider slider    { background-color: @base0F; }
 
+/* Borderless icon button */
 .mute-btn {
   font-size: 16px;
   color: @base08;
-  border: 1px solid @base02;
-  padding: 8px 12px;
+  background-color: transparent;
+  padding: 6px 10px;
 }
-.mute-btn:hover { border-color: @base08; }
+.mute-btn:hover { color: @base05; }
 
-/* System Grid */
+/* System tiles — borderless labelled blocks */
 .system-tile {
-  background-color: @base00;
-  border: 1px solid @base02;
-  padding: 12px;
+  background-color: transparent;
+  padding: 4px 0;
 }
 
 .tile-title label {
   font-size: 11px;
   font-weight: bold;
 }
-.tile-title .icon { font-size: 13px; }
+.tile-title .icon { font-size: 13px; margin-right: 6px; }
 
-.tile-network   { color: @base0C; } /* Magenta, like .network */
-.tile-bluetooth { color: @base09; } /* Blue, like bluetooth battery */
+.tile-network   { color: @base0C; }
+.tile-bluetooth { color: @base09; }
 .tile-display   { color: @base0F; }
 .tile-actions   { color: @base0E; }
 
+/* Text-only action buttons — no border, no fill, ink shifts on hover */
 .action-btn {
-  font-size: 10px;
-  color: @base05;
-  border: 1px solid @base03;
-  padding: 4px 2px;
+  font-size: 11px;
+  color: @base04;
   background-color: transparent;
+  padding: 6px 4px;
 }
 .action-btn:hover {
-  background-color: @base03;
+  color: @base05;
 }
 .action-btn.destructive {
-  color: @base0E; /* Unified with purple accent as requested */
-  border-color: @base0E;
+  color: @base0A;
 }
 .action-btn.destructive:hover {
-  background-color: @base0E;
-  color: @base00;
+  color: @base0A;
 }
 
-/* Tasks */
+/* Tasks — ledger lines: borderless rows parted by a faint rule */
 .task-item {
-  background-color: @base00;
-  border: 1px solid @base02;
-  padding: 8px 12px;
+  background-color: transparent;
+  border-bottom: 1px solid @base02;
+  padding: 10px 2px;
 }
 
 .task-check {
   font-size: 14px;
   color: @base03;
-  padding: 0 4px;
+  padding: 0 6px 0 0;
 }
 .task-check:hover { color: @base0D; }
 
 .task-del-btn {
   font-size: 14px;
   color: @base03;
-  padding: 0 4px;
+  padding: 0 0 0 6px;
 }
 .task-del-btn:hover { color: @base0A; }
 
 .task-desc { font-size: 14px; color: @base05; }
 .task-due { font-size: 11px; color: @base03; }
 
+/* Underline input — editorial, no box */
 .task-input {
-  background-color: @base00;
-  border: 1px solid @base02;
+  background-color: transparent;
+  border-bottom: 1px solid @base02;
   color: @base05;
-  padding: 8px;
+  padding: 8px 2px;
   caret-color: @base0E;
 }
-.task-input:focus { border-color: @base0E; }
+.task-input:focus { border-bottom: 1px solid @base0E; }
 
+/* Text-only submit */
 .add-task-btn {
   font-size: 11px;
   font-weight: bold;
   color: @base0E;
-  border: 1px solid @base0E;
-  padding: 8px 16px;
   background-color: transparent;
+  padding: 8px 12px;
 }
 .add-task-btn:hover {
-  background-color: @base0E;
-  color: @base00;
+  color: @base05;
 }

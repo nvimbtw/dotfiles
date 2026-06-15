@@ -2,8 +2,8 @@
   :monitor 0
   :geometry (geometry
     :x "0%"
-    :y "60px"
-    :width "1200px"
+    :y "64px"
+    :width "1040px"
     :height "0"
     :anchor "center"
   )
@@ -32,24 +32,27 @@
     (box
       :class "console-body"
       :orientation "horizontal"
-      :space-evenly true
-      :spacing 16
+      :space-evenly false
+      :spacing 40
       :vexpand false
+      ;; Left rail — status & controls
       (box
         :class "column-left"
         :orientation "vertical"
         :space-evenly false
-        :spacing 16
+        :spacing 28
+        :hexpand true
         :vexpand false
         (battery-card)
         (audio-card)
         (system-card)
       )
+      ;; Right rail — tasks
       (box
         :class "column-right"
         :orientation "vertical"
         :space-evenly false
-        :spacing 16
+        :hexpand true
         :vexpand true
         (tasks-card)
       )
@@ -57,7 +60,7 @@
   )
 )
 
-;; Header strip mirrors the mainbar: icon+label pairs split by 󰇝 separators
+;; Masthead — title sits left, the time/date meta and close sit right
 (defwidget console-header []
   (box
     :class "console-header"
@@ -65,15 +68,16 @@
     :space-evenly false
     :spacing 16
     (label-with-icon :icon "󰆍" :text "CONSOLE" :class "console-title")
-    (label :class "sep" :text "󰇝")
-    (label-with-icon :icon {clock.icon} :text {clock.time} :class "clock")
-    (label :class "sep" :text "󰇝")
-    (label-with-icon :icon {date_time.icon} :text {date_time.date} :class "date")
     (box :hexpand true)
+    (label-with-icon :icon {clock.icon} :text {clock.time} :class "clock")
+    (label :class "sep" :text "│")
+    (label-with-icon :icon {date_time.icon} :text {date_time.date} :class "date")
+    (label :class "sep" :text "│")
     (button :class "close-btn" :onclick "eww close console" "󰖭")
   )
 )
 
+;; Section eyebrow — small uppercase label in the section's accent
 (defwidget card-title [icon text accent]
   (box
     :class "card-title ${accent}"
@@ -90,7 +94,7 @@
     :class "card"
     :orientation "vertical"
     :space-evenly false
-    :spacing 16
+    :spacing 14
     :vexpand false
     (box
       :class "card-header"
@@ -108,10 +112,10 @@
       :class "info-grid"
       :orientation "horizontal"
       :space-evenly true
-      (box :orientation "vertical" :space-evenly false :spacing 4
+      (box :orientation "vertical" :space-evenly false :spacing 10
         (info-item :label "STATUS" :value {battery.status})
         (info-item :label "DRAW" :value "${round(battery.power / 1000000, 1)}W"))
-      (box :orientation "vertical" :space-evenly false :spacing 4
+      (box :orientation "vertical" :space-evenly false :spacing 10
         (info-item :label "TIME LEFT" :value {battery.time_left})
         (info-item :label "INPUT" :value "${round(battery.power_input / 1000000, 1)}W"))
     )
@@ -123,7 +127,7 @@
     :class "card"
     :orientation "vertical"
     :space-evenly false
-    :spacing 16
+    :spacing 14
     :vexpand false
     (card-title :icon {volume.icon} :text "AUDIO" :accent "accent-audio")
     (box
@@ -133,15 +137,15 @@
       :spacing 16
       (button :class "mute-btn" :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" {volume.icon})
       (box :orientation "vertical" :space-evenly false :spacing 8 :hexpand true
-        (label :text "DEFAULT SINK" :class "muted-label" :halign "start")
-        (box :orientation "horizontal" :space-evenly false :spacing 12
-          (scale
-            :class "audio-slider"
-            :value {volume.level}
-            :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
-            :min 0 :max 101 :hexpand true)
-          (label :text {volume.vol} :class "accent-audio value-text" :width 40 :halign "end")
-        )
+        (box :orientation "horizontal" :space-evenly false
+          (label :text "DEFAULT SINK" :class "muted-label" :halign "start")
+          (box :hexpand true)
+          (label :text {volume.vol} :class "accent-audio value-text" :halign "end"))
+        (scale
+          :class "audio-slider"
+          :value {volume.level}
+          :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
+          :min 0 :max 101 :hexpand true)
       )
     )
   )
@@ -152,45 +156,43 @@
     :class "card"
     :orientation "vertical"
     :space-evenly false
-    :spacing 16
+    :spacing 14
     :vexpand false
     (card-title :icon "󰒓" :text "SYSTEM" :accent "accent-system")
     (box
       :class "system-grid"
       :orientation "vertical"
       :space-evenly false
-      :spacing 12
-      (box :orientation "horizontal" :space-evenly true :spacing 12
-        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
+      :spacing 18
+      (box :orientation "horizontal" :space-evenly true :spacing 28
+        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 6 :hexpand true
           (tile-title :icon "󰤨" :text "NETWORK" :accent "tile-network")
           (label :text {sys_network.conn} :class "value-text" :halign "start")
-          (label :text "${sys_network.iface} 󰇝 ${sys_network.ip}" :class "muted-label" :halign "start"))
-        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
+          (label :text "${sys_network.iface} · ${sys_network.ip}" :class "muted-label" :halign "start"))
+        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 6 :hexpand true
           (tile-title :icon "󰂯" :text "BLUETOOTH" :accent "tile-bluetooth")
           (label :text {sys_bluetooth.power} :class "value-text" :halign "start")
           (label :text {sys_bluetooth.device} :class "muted-label" :halign "start"))
       )
-      (box :orientation "horizontal" :space-evenly true :spacing 12
-        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
-          (tile-title :icon "󰃟" :text "DISPLAY" :accent "tile-display")
-          (box :orientation "horizontal" :space-evenly false :spacing 12
-            (label :text "${sys_brightness}%" :class "value-text" :width 40)
-            (scale
-              :class "brightness-slider"
-              :value {sys_brightness}
-              :onchange "brightnessctl set {}%"
-              :min 0 :max 101 :hexpand true)))
-        (box :class "system-tile" :orientation "vertical" :space-evenly false :spacing 4 :hexpand true
-          (tile-title :icon "󰐥" :text "ACTIONS" :accent "tile-actions")
-          (box :class "action-row" :orientation "horizontal" :space-evenly true :spacing 8
-            ;; Spawn hyprlock via hyprctl so Hyprland owns the process —
-            ;; spawned directly it dies with the eww daemon (e.g. on reload).
-            ;; Uses the hyprland.lua dispatch syntax (classic "exec" errors).
-            (button :class "action-btn" :onclick "eww close console && hyprctl dispatch 'hl.dsp.exec_cmd(\"hyprlock\")'" "LOCK")
-            (button :class "action-btn" :onclick "eww close console && systemctl suspend" "SLEEP")
-            (button :class "action-btn" :onclick "eww close console && systemctl hibernate" "HIB")
-            (button :class "action-btn destructive" :onclick "systemctl reboot" "REBOOT")))
-      )
+      (box :orientation "vertical" :space-evenly false :spacing 8
+        (tile-title :icon "󰃟" :text "DISPLAY" :accent "tile-display")
+        (box :orientation "horizontal" :space-evenly false :spacing 12
+          (scale
+            :class "brightness-slider"
+            :value {sys_brightness}
+            :onchange "brightnessctl set {}%"
+            :min 0 :max 101 :hexpand true)
+          (label :text "${sys_brightness}%" :class "value-text" :width 48 :halign "end")))
+      (box :orientation "vertical" :space-evenly false :spacing 8
+        (tile-title :icon "󰐥" :text "ACTIONS" :accent "tile-actions")
+        (box :class "action-row" :orientation "horizontal" :space-evenly true :spacing 8
+          ;; Spawn hyprlock via hyprctl so Hyprland owns the process —
+          ;; spawned directly it dies with the eww daemon (e.g. on reload).
+          ;; Uses the hyprland.lua dispatch syntax (classic "exec" errors).
+          (button :class "action-btn" :onclick "eww close console && hyprctl dispatch 'hl.dsp.exec_cmd(\"hyprlock\")'" "LOCK")
+          (button :class "action-btn" :onclick "eww close console && systemctl suspend" "SLEEP")
+          (button :class "action-btn" :onclick "eww close console && systemctl hibernate" "HIB")
+          (button :class "action-btn destructive" :onclick "systemctl reboot" "REBOOT")))
     )
   )
 )
@@ -211,7 +213,7 @@
     :class "card"
     :orientation "vertical"
     :space-evenly false
-    :spacing 16
+    :spacing 14
     :vexpand true
     (box
       :class "card-header"
@@ -231,7 +233,7 @@
         :orientation "horizontal")
     )
     (scroll :vscroll true :hexpand true :vexpand true
-      (box :orientation "vertical" :space-evenly false :spacing 8
+      (box :orientation "vertical" :space-evenly false :spacing 0
         (label :visible {arraylength(tasks) == 0} :text "No pending tasks" :class "muted-label" :valign "center" :halign "center" :vexpand true)
         (for t in tasks
           (task-item :id {t.id} :desc {t.description} :due {t.due})

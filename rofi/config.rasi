@@ -10,19 +10,20 @@ configuration {
 }
 
 /*
- * Oxocarbon Dark — same language as the bar and console:
- * flat base00 surfaces, 1px base02 hairlines, purple primary accent.
+ * Kanagawa Dragon — editorial minimalism.
+ * One rounded slab, no borders. Selection and the search field are
+ * soft fills, not outlines. Whitespace does the separating.
  */
 * {
-  base00: #161616; /* Main Background */
-  base01: #262626; /* Elevated Surface */
-  base02: #393939; /* Selection/Subtle Border */
-  base03: #525252; /* Strong Border */
-  base05: #f2f4f8; /* Foreground */
-  base08: #3ddbd9; /* Cyan */
-  base0A: #ee5396; /* Pink/High Status */
-  base0C: #ff7eb6; /* Magenta */
-  base0E: #be95ff; /* Purple/Primary */
+  base00: #181616; /* Main Background */
+  base01: #1D1C19; /* Soft fill (search, selected tab) */
+  base02: #282727; /* Selected row fill */
+  base03: #625e5a; /* Muted ink */
+  base05: #c5c9c5; /* Foreground */
+  base08: #8ea4a2; /* Aqua */
+  base0A: #c4746e; /* Red/High Status */
+  base0C: #b6927b; /* Orange */
+  base0E: #c4b28a; /* Sand/Primary */
 
   background-color: transparent;
   text-color:       @base05;
@@ -33,27 +34,26 @@ configuration {
 }
 
 window {
-  width:            640px;
+  width:            600px;
   background-color: @base00;
-  border:           1px;
-  border-color:     @base02;
-  border-radius:    0;
+  border-radius:    12px;
+  padding:          14px;
   location:         center;
   anchor:           center;
 }
 
 mainbox {
   children: [ inputbar, message, listview, mode-switcher ];
+  spacing:  12px;
 }
 
-/* Header strip — mirrors the console/bar header */
+/* Search — a soft filled field, claude-style */
 inputbar {
+  background-color: @base01;
+  border-radius:    8px;
   padding:          12px 16px;
-  background-color: @base00;
-  border:           0 0 1px 0;
-  border-color:     @base02;
   children:         [ prompt, entry ];
-  spacing:          16px;
+  spacing:          12px;
 }
 
 prompt {
@@ -69,30 +69,29 @@ entry {
 }
 
 message {
+  background-color: @base01;
+  border-radius:    8px;
   padding:          12px 16px;
-  border:           0 0 1px 0;
-  border-color:     @base02;
 }
 
 textbox {
-  text-color: @base03;
+  text-color: @base05;
 }
 
-/* List — flat hairline tiles, like .task-item */
+/* List — borderless rows, tight rhythm */
 listview {
   lines:        8;
   columns:      1;
   fixed-height: false;
-  padding:      16px;
-  spacing:      8px;
+  padding:      0;
+  spacing:      2px;
   scrollbar:    false;
 }
 
 element {
-  padding:          8px 12px;
-  background-color: @base00;
-  border:           1px;
-  border-color:     @base02;
+  padding:          9px 14px;
+  border-radius:    6px;
+  background-color: transparent;
   text-color:       @base05;
 }
 
@@ -102,52 +101,48 @@ element-text {
 }
 
 element normal.normal, element alternate.normal {
-  background-color: @base00;
+  background-color: transparent;
   text-color:       @base05;
 }
 
+/* Selection is a soft fill, accent only in the text */
 element selected.normal {
-  background-color: @base00;
-  border-color:     @base0E;
+  background-color: @base02;
   text-color:       @base0E;
 }
 
 element normal.urgent, element alternate.urgent {
-  background-color: @base00;
+  background-color: transparent;
+  text-color:       @base0A;
+}
+
+element selected.urgent {
+  background-color: @base02;
   text-color:       @base0A;
 }
 
 element normal.active, element alternate.active {
-  background-color: @base00;
+  background-color: transparent;
   text-color:       @base08;
-}
-
-element selected.urgent {
-  background-color: @base00;
-  border-color:     @base0A;
-  text-color:       @base0A;
 }
 
 element selected.active {
-  background-color: @base00;
-  border-color:     @base08;
+  background-color: @base02;
   text-color:       @base08;
 }
 
-/* Mode strip — reads like the mainbar */
+/* Mode strip — text-only, soft fill on the active tab */
 mode-switcher {
-  border:       1px 0 0 0;
-  border-color: @base02;
+  spacing: 8px;
 }
 
 button {
-  padding:    8px 0;
-  text-color: @base03;
+  padding:       8px 0;
+  border-radius: 6px;
+  text-color:    @base03;
 }
 
 button selected {
-  background-color: @base00;
+  background-color: @base01;
   text-color:       @base0E;
-  border:           0 0 1px 0;
-  border-color:     @base0E;
 }

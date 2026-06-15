@@ -1,4 +1,4 @@
-/* oxocarbon.css - Oxocarbon Dark brutalist theme for Discord */
+/* kanagawa-dragon.css - Kanagawa Dragon theme for Discord */
 
 :root {
     container-name: root;
@@ -6,10 +6,10 @@
     --custom-guild-list-padding: 12px;
     --panel-backdrop-filter: none;
 
-    /* brutalist: zero all rounding */
-    --radius-lg: 0;
-    --radius-md: 0;
-    --radius-sm: 0;
+    /* flat: zero rounding, square like the rest of the system */
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
 }
 
 body {
@@ -27,10 +27,10 @@ body {
     --font-small: 'MonaspiceNe Nerd Font', ui-sans-serif, system-ui, sans-serif;
 
     /* sizes */
-    --gap: 12px; /* spacing between panels */
-    --divider-thickness: 8px; /* thickness of unread messages divider */
-    --message-accent-width: 3px; /* thickness of mention/reply left edge */
-    --border-thickness: 1px; /* thickness of borders around main panels. DOES NOT AFFECT OTHER BORDERS */
+    --gap: 8px; /* spacing between panels — tight and minimal */
+    --divider-thickness: 1px; /* unread divider, a clean hairline */
+    --message-accent-width: 2px; /* thickness of mention/reply left edge */
+    --border-thickness: 0px; /* no panel borders — one continuous surface */
     --custom-guild-list-width: calc(var(--guildbar-avatar-size) + var(--custom-guild-list-padding) * 2 + var(--border-thickness) * 2);
 
     /* reduce top forehead spacing to match bottom */
@@ -102,7 +102,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 .chat_f75fb0 > .container__0b563 /* server channels and roles page */,
 .container__8a031 /* popout modals */ {
     background-color: var(--background-base-lower);
-    border-radius: 0;
+    border-radius: var(--radius-md);
     border: var(--border-thickness) solid var(--border-subtle);
     backdrop-filter: var(--panel-backdrop-filter);
     box-sizing: border-box;
@@ -296,7 +296,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 
 .notice__6e2b9 /* notice banner */ {
     margin: 0 var(--gap) var(--gap) 0;
-    border-radius: 0;
+    border-radius: var(--radius-md);
     box-sizing: border-box;
     height: 40px;
 }
@@ -387,22 +387,20 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 
 /* channel messages bar */
 .barBase__0f481:not(.bottomBar__0f481) {
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    border-radius: 0;
+    top: var(--gap);
+    left: var(--gap);
+    right: var(--gap);
+    border-radius: var(--radius-md);
     padding: 0 8px;
-    border-top: 1px solid var(--border-subtle);
 }
 
 /* "This channel is not in your channel list" header */
 .chatHeaderBar_dc83f5 {
-    margin: 12px;
+    margin: var(--gap);
     margin-bottom: 0;
     padding-left: 16px;
     background-color: var(--bg-3);
-    border-radius: 0;
-    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
 
     &::after {
         display: none;
@@ -426,7 +424,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 
 /* general chat bar improvements */
 .channelTextArea_f75fb0 /* chat bar */ {
-    border-radius: 0;
+    border-radius: var(--radius-md);
 }
 .form_f75fb0 .themedBackground__74017 /* chat bar inner */ {
     background: none;
@@ -457,7 +455,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 }
 
 .message__5126c {
-    border-radius: 0;
+    border-radius: var(--radius-md);
     margin-left: 4px;
 }
 
@@ -471,22 +469,18 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
     margin-left: calc((var(--custom-guild-list-padding) - 4px) / 2);
 }
 
-/* improve embeds */
+/* embeds — soft filled block, no border */
 .embedFull__623de {
-    border: 4px solid var(--border-normal);
-    border-top-color: var(--border-subtle) !important;
-    border-top-width: 1px;
-    border-bottom-color: var(--border-subtle) !important;
-    border-bottom-width: 1px;
-    border-right-color: var(--border-subtle) !important;
-    border-right-width: 1px;
+    border: none !important;
+    background-color: var(--bg-3);
 }
 
-/* improve borders */
+/* reactions — soft filled pills, no border */
 .reaction__23977 /* message reactions */,
 .reactionBtn__23977.forceShow__23977 /* add reaction button */ {
-    border-width: 2px;
-    border-radius: 0 !important;
+    border: none !important;
+    background-color: var(--bg-3);
+    border-radius: var(--radius-md) !important;
 }
 
 /* squareness */
@@ -503,10 +497,10 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 .videoWrapper__08186 /* video wrapper */,
 .imageWrapper__178ee /* message image */,
 .clickableLink__08186 /* clickable link image */ {
-    border-radius: 0;
+    border-radius: var(--radius-md);
 }
 
-/* brutalist: square avatars */
+/* flat: square avatars */
 .avatar__02796,
 .avatarSpeaking__02796,
 .avatar__20a53,
@@ -522,7 +516,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 .userPopoutAvatar__02796 /* popout avatar */,
 .voiceAvatar__02796 /* voice avatar */,
 .botTagAvatar__82f07 /* bot tag in avatar */ {
-    border-radius: 0 !important;
+    border-radius: var(--radius-md) !important;
 }
 /* avatar inner elements */
 .avatar__02796 img,
@@ -531,19 +525,18 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 .avatar__81b0e svg,
 .avatar__08316 img,
 .avatar__08316 svg {
-    border-radius: 0 !important;
+    border-radius: var(--radius-md) !important;
 }
 
 .outer_c0bea0 /* profile outer */, 
 .contentWrapper__08434  /* gif panel */ {
-    border-radius: 0 !important;
+    border-radius: var(--radius-md) !important;
 }
 .inner_c0bea0 /* profile inner */ {
-    border-radius: 0;
+    border-radius: var(--radius-md);
 }
 
 .outer_c0bea0 /* profile outer */ {
-    border: 1px solid var(--border-subtle);
     background-position: center calc(-1 * var(--border-thickness));
     background-size: 100% calc(100% + 2 * var(--border-thickness));
 }
@@ -556,7 +549,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
     -webkit-margin-start: 0;
 }
 .container__37e49 .container_df39b2 /* nameplate */ {
-    border-radius: 0;
+    border-radius: var(--radius-md);
     width: 100%;
     height: 100%;
     top: 0;
@@ -572,7 +565,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
     }
 
     .footer_a55fdc {
-        border-radius: 0;
+        border-radius: var(--radius-md);
 
         .footerContent_a55fdc {
             padding: var(--space-16) var(--space-24);
@@ -601,7 +594,7 @@ body {
     display: none;
 }
 
-/* animations.css - disabled for brutalist */
+/* animations.css - disabled, kept minimal */
 
 /* background-image.css */
 body {
@@ -654,13 +647,13 @@ body {
 @container body style(--custom-chatbar: separated) {
     .chatContent_f75fb0 {
         background: none;
-        border-radius: 0;
+        border-radius: var(--radius-md);
         border: none;
         backdrop-filter: none;
     }
     .messagesWrapper__36d07 {
         background-color: var(--background-base-lower);
-        border-radius: 0;
+        border-radius: var(--radius-md);
         border: var(--border-thickness) solid var(--border-subtle);
         backdrop-filter: var(--panel-backdrop-filter);
         overflow: hidden;
@@ -679,7 +672,7 @@ body {
         right: 0;
         background: var(--background-base-lower);
         height: 26px;
-        border-radius: 0;
+        border-radius: var(--radius-md);
         z-index: 2;
     }
     .form_f75fb0 {
@@ -694,7 +687,7 @@ body {
         order: -1;
         top: calc(-26px + var(--border-thickness) * -1);
         left: calc(var(--border-thickness));
-        border-radius: 0;
+        border-radius: var(--radius-md);
         padding: 0 0 0 var(--space-sm);
         height: 26px;
     }
@@ -704,7 +697,7 @@ body {
     .channelTextArea_f75fb0 {
         margin: 0;
         background-color: var(--background-base-lower);
-        border-radius: 0;
+        border-radius: var(--radius-md);
         border: var(--border-thickness) solid var(--border-subtle);
         backdrop-filter: var(--panel-backdrop-filter);
     }
@@ -715,7 +708,7 @@ body {
         margin: var(--gap) 0 0 0;
         height: var(--chatbar-height);
         padding: 0;
-        border-radius: 0;
+        border-radius: var(--radius-md);
         border: var(--border-thickness) solid var(--border-subtle);
         background-color: var(--bg-4);
         backdrop-filter: var(--panel-backdrop-filter);
@@ -726,7 +719,7 @@ body {
         margin-bottom: var(--gap);
         padding-left: 28px;
         border-width: var(--border-thickness);
-        border-radius: 0;
+        border-radius: var(--radius-md);
         background-color: var(--bg-4);
     }
 }
@@ -739,59 +732,59 @@ body {
 }
 
 :root {
-    /* Oxocarbon Dark palette — exact base16 hexes, same as eww.css */
-    --base00: #161616; /* Main Background */
-    --base01: #262626; /* Elevated Surface */
-    --base02: #393939; /* Selection/Subtle Border */
-    --base03: #525252; /* Strong Border */
-    --base04: #dde1e6;
-    --base05: #f2f4f8; /* Foreground */
-    --base06: #ffffff;
-    --base07: #08bdba;
-    --base08: #3ddbd9; /* Cyan */
-    --base09: #78a9ff; /* Blue */
-    --base0A: #ee5396; /* Pink/High Status */
-    --base0B: #33b1ff;
-    --base0C: #ff7eb6; /* Magenta */
-    --base0D: #42be65; /* Green/Success Status */
-    --base0E: #be95ff; /* Purple/Primary */
-    --base0F: #82cfff;
+    /* Kanagawa Dragon palette — same warm tones as eww.css */
+    --base00: #181616; /* Main Background */
+    --base01: #1D1C19; /* Elevated Surface */
+    --base02: #282727; /* Selection/Subtle Border */
+    --base03: #625e5a; /* Strong Border */
+    --base04: #DCD7BA; /* Bright text / headings */
+    --base05: #c5c9c5; /* Foreground */
+    --base06: #DCD7BA;
+    --base07: #87a987;
+    --base08: #8ea4a2; /* Aqua */
+    --base09: #8ba4b0; /* Blue */
+    --base0A: #c4746e; /* Red/High Status */
+    --base0B: #8a9a7b; /* Green/String */
+    --base0C: #b6927b; /* Orange */
+    --base0D: #87a987; /* Green/Success Status */
+    --base0E: #c4b28a; /* Sand/Primary */
+    --base0F: #949fb5; /* Teal */
 
     /* text colors */
     --text-0: var(--bg-4); /* text on colored elements */
-    --text-1: var(--base05); /* #f2f4f8 - other normally white text */
-    --text-2: var(--base04); /* #dde1e6 - headings and important text */
+    --text-1: var(--base05); /* #c5c9c5 - other normally white text */
+    --text-2: var(--base04); /* #DCD7BA - headings and important text */
     --text-3: oklch(78% 0 0); /* normal text */
     --text-4: oklch(62% 0 0); /* #939598 - icon buttons and channels */
     --text-5: oklch(45% 0 0); /* muted channels/chats and timestamps */
 
     /* background and dark colors */
-    --bg-1: var(--base03); /* #525252 - dark buttons when clicked */
-    --bg-2: var(--base02); /* #393939 - dark buttons */
-    --bg-3: var(--base01); /* #262626 - spacing, secondary elements */
-    --bg-4: var(--base00); /* #161616 - main background color */
+    --bg-1: var(--base03); /* #625e5a - dark buttons when clicked */
+    --bg-2: var(--base02); /* #282727 - dark buttons */
+    --bg-3: var(--base01); /* #1D1C19 - spacing, secondary elements */
+    --bg-4: var(--base00); /* #181616 - main background color */
     --hover: oklch(100% 0 0 / 0.08); /* channels and buttons when hovered */
     --active: oklch(100% 0 0 / 0.16); /* channels and buttons when clicked or selected */
     --active-2: oklch(100% 0 0 / 0.24); /* extra state for transparent buttons */
     --message-hover: oklch(0% 0 0 / 0.1); /* messages when hovered */
 
-    /* accent colors (purple base0E — the system's primary, like rofi/console) */
+    /* accent colors (sand base0E — the system's primary, like rofi/console) */
     --accent-1: var(--purple-1); /* links and other accent text */
     --accent-2: var(--purple-2); /* small accent elements */
     --accent-3: var(--purple-3); /* accent buttons */
     --accent-4: var(--purple-4); /* accent buttons when hovered */
     --accent-5: var(--purple-5); /* accent buttons when clicked */
-    --accent-new: var(--red-2); /* stuff that's normally red like mute/deafen buttons — pink, the system's high-status color */
+    --accent-new: var(--red-2); /* stuff that's normally red like mute/deafen buttons — red, the system's high-status color */
     --mention: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 90%) 40%, transparent); /* background of messages that mention you */
     --mention-hover: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 95%) 40%, transparent); /* background of messages that mention you when hovered */
     --reply: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 90%) 40%, transparent); /* background of messages that reply to you */
     --reply-hover: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 95%) 40%, transparent); /* background of messages that reply to you when hovered */
 
     /* status indicator colors */
-    --online: var(--green-2); /* #42be65 */
-    --dnd: var(--red-2); /* #ee5396 */
-    --idle: var(--yellow-2); /* #78a9ff */
-    --streaming: var(--purple-2); /* #be95ff */
+    --online: var(--green-2); /* #87a987 */
+    --dnd: var(--red-2); /* #c4746e */
+    --idle: var(--yellow-2); /* #8ba4b0 */
+    --streaming: var(--purple-2); /* #c4b28a */
     --offline: var(--text-4); /* default offline color */
 
     /* border colors — solid base02 hairlines, same as the eww console/rofi */
@@ -799,32 +792,32 @@ body {
     --border: var(--base02); /* normal border color */
     --button-border: var(--base02); /* neutral border color of buttons */
 
-    /* base colors - Oxocarbon palette, ramps anchored on exact hexes */
-    --red-2: var(--base0A); /* #ee5396 - pink - critical */
+    /* base colors - Kanagawa Dragon palette, ramps anchored on exact hexes */
+    --red-2: var(--base0A); /* #c4746e - red - critical */
     --red-1: color-mix(in oklch, var(--red-2), white 12%);
     --red-3: color-mix(in oklch, var(--red-2), black 12%);
     --red-4: color-mix(in oklch, var(--red-2), black 24%);
     --red-5: color-mix(in oklch, var(--red-2), black 36%);
 
-    --green-2: var(--base0D); /* #42be65 - green - positive */
+    --green-2: var(--base0D); /* #87a987 - green - positive */
     --green-1: color-mix(in oklch, var(--green-2), white 12%);
     --green-3: color-mix(in oklch, var(--green-2), black 12%);
     --green-4: color-mix(in oklch, var(--green-2), black 24%);
     --green-5: color-mix(in oklch, var(--green-2), black 36%);
 
-    --blue-2: var(--base08); /* #3ddbd9 - cyan - functional */
+    --blue-2: var(--base08); /* #8ea4a2 - aqua - functional */
     --blue-1: color-mix(in oklch, var(--blue-2), white 12%);
     --blue-3: color-mix(in oklch, var(--blue-2), black 12%);
     --blue-4: color-mix(in oklch, var(--blue-2), black 24%);
     --blue-5: color-mix(in oklch, var(--blue-2), black 36%);
 
-    --yellow-2: var(--base09); /* #78a9ff - blue - warning */
+    --yellow-2: var(--base09); /* #8ba4b0 - blue - warning */
     --yellow-1: color-mix(in oklch, var(--yellow-2), white 12%);
     --yellow-3: color-mix(in oklch, var(--yellow-2), black 12%);
     --yellow-4: color-mix(in oklch, var(--yellow-2), black 24%);
     --yellow-5: color-mix(in oklch, var(--yellow-2), black 36%);
 
-    --purple-2: var(--base0E); /* #be95ff - purple - primary/streaming */
+    --purple-2: var(--base0E); /* #c4b28a - sand - primary/streaming */
     --purple-1: color-mix(in oklch, var(--purple-2), white 12%);
     --purple-3: color-mix(in oklch, var(--purple-2), black 12%);
     --purple-4: color-mix(in oklch, var(--purple-2), black 24%);
@@ -835,7 +828,7 @@ body {
     body,
     .theme-dark:not(.custom-user-profile-theme),
     .theme-light:not(.custom-user-profile-theme) {
-        --app-frame-background: var(--bg-3);
+        --app-frame-background: var(--bg-4);
         --app-frame-border: var(--border);
         --app-message-embed-secondary-text: var(--text-2);
         --background-accent: var(--bg-2);
@@ -1229,9 +1222,9 @@ body {
         --redesign-button-tertiary-text: red;
         --scrollbar-auto-scrollbar-color-thumb: yellow;
         --scrollbar-auto-scrollbar-color-track: lime;
-    --scrollbar-auto-thumb: var(--accent-2);
+    --scrollbar-auto-thumb: var(--bg-1);
     --scrollbar-auto-track: transparent;
-    --scrollbar-thin-thumb: var(--accent-2);
+    --scrollbar-thin-thumb: var(--bg-1);
     --scrollbar-thin-track: transparent;
         --spine-default: var(--text-5);
         --spoiler-hidden-background: var(--bg-2);
@@ -1331,7 +1324,7 @@ body {
     }
 
     .bg__960e4 /* main background */ {
-        background: var(--bg-3);
+        background: var(--bg-4);
     }
 
     .modeUnreadImportant__2ea32 .icon__2ea32,
@@ -1543,11 +1536,11 @@ body {
         color: var(--text-4);
     }
 
-    /* brutalist: square DM list hover/selected */
+    /* flat: square DM list hover/selected */
     .interactive__972a0,
     .interactive__972a0:hover,
     .interactive__972a0.interactiveSelected__972a0 {
-        border-radius: 0 !important;
+        border-radius: var(--radius-md) !important;
     }
 
     .colorable_f1ceac.white_f1ceac /* vc icon button nub when white */ {
@@ -1655,7 +1648,7 @@ body {
     }
     .status_a423bd[style='background-color: rgb(132, 133, 141);'] {
         background-color: var(--offline) !important;
-        border-radius: 0 !important;
+        border-radius: 50% !important;
     }
     rect[fill='#45a366'],
         path[fill='#45a366'] /* status activity icon */,
@@ -1665,7 +1658,7 @@ body {
     }
     .status_a423bd[style='background-color: rgb(69, 163, 102);'] {
         background-color: var(--online) !important;
-        border-radius: 0 !important;
+        border-radius: 50% !important;
     }
     rect[fill='#ffc04e'],
     .vc-platform-indicator > svg[fill='#ffc04e'] {
@@ -1673,7 +1666,7 @@ body {
     }
     .status_a423bd[style='background-color: rgb(255, 192, 78);'] {
         background-color: var(--idle) !important;
-        border-radius: 0 !important;
+        border-radius: 50% !important;
     }
     rect[fill='#da3e44'],
     .vc-platform-indicator > svg[fill='#da3e44'] {
@@ -1681,14 +1674,14 @@ body {
     }
     .status_a423bd[style='background-color: rgb(218, 62, 68);'] {
         background-color: var(--dnd) !important;
-        border-radius: 0 !important;
+        border-radius: 50% !important;
     }
     rect[fill='#9147ff'] {
         fill: var(--streaming);
     }
     div[style='display: flex; justify-content: center; align-items: center; border-radius: 5px; background-color: rgb(69, 163, 102); height: 10px; width: 25px;'] {
         background-color: var(--online) !important;
-        border-radius: 0 !important;
+        border-radius: var(--radius-lg) !important;
     }
 
     /* fix radio bar button colors */
@@ -1891,7 +1884,7 @@ body {
         width: 100%;
         height: 100%;
         background-color: var(--background-surface-higher);
-        border-radius: 0;
+        border-radius: var(--radius-md);
 
         &:hover {
             background-color: var(--bg-brand);

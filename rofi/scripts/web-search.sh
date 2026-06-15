@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Oxocarbon colors
-CYAN="#3ddbd9"
-PURPLE="#be95ff"
-PINK="#ff7eb6"
-BASE03="#525252"
+# Kanagawa Dragon colors
+CYAN="#8ea4a2"
+PURPLE="#c4b28a"
+PINK="#b6927b"
+BASE03="#625e5a"
 
 # 1. Get Search Query
 query=$(rofi -dmenu -p "SEARCH" -theme-str 'entry { placeholder: "URL OR SEARCH..."; }')

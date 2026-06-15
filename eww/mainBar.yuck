@@ -32,11 +32,11 @@
     :class "left-box"
     :halign "start"
     :space-evenly false
-    :spacing 16
+    :spacing 20
     (label-with-icon :icon {date_time.icon} :text {date_time.date} :class "date")
-    (label :class "sep" :text "󰇝")
+    (label :class "sep" :text "│")
     (label-with-icon :icon {clock.icon} :text {clock.time} :class "clock")
-    (label :class "sep" :text "󰇝")
+    (label :class "sep" :text "│")
     (workspaces-widget)
   )
 )
@@ -67,13 +67,13 @@
     :class "right-box"
     :halign "end"
     :space-evenly false
-    :spacing 16
+    :spacing 20
     (label-with-icon :icon {network.icon} :text {network.name} :class "network")
-    (label :class "sep" :text "󰇝")
+    (label :class "sep" :text "│")
     (label-with-icon :icon {keyboard.icon} :text {keyboard.layout} :class "keyboard")
-    (label :class "sep" :text "󰇝")
+    (label :class "sep" :text "│")
     (label-with-icon :icon {battery.icon} :text "${battery.capacity}%" :class {battery.class})
-    (label :class "sep" :text "󰇝")
+    (label :class "sep" :text "│")
     (label-with-icon :icon {volume.icon} :text {volume.vol} :class "volume")
   )
 )
@@ -92,10 +92,10 @@
   (box 
     :class "workspaces"
     :space-evenly false
-    :spacing 6
+    :spacing 8
     (for w in workspaces
-      (label 
-        :text {w.active ? "󰝤" : "󰝣"}
+      (label
+        :text {w.active ? "" : ""}
         :class {w.active ? "workspace-active" : "workspace"}
       )
     )

@@ -1,11 +1,11 @@
 # Font
 font=MonaspiceNe Nerd Font Bold 12
 
-# Colors (Oxocarbon Dark base16)
-# Elevation: Using base01 (#262626) for the background to create depth
-background-color=#262626
-text-color=#f2f4f8
-border-color=#525252
+# Colors (Kanagawa Dragon)
+# Elevation: Using the elevated surface (#1D1C19) for the background to create depth
+background-color=#1D1C19
+text-color=#c5c9c5
+border-color=#625e5a
 
 # Brutalistic shapes & borders
 border-size=1
@@ -18,12 +18,12 @@ width=400
 height=150
 
 # Eye candy
-progress-color=#be95ff
+progress-color=#c4b28a
 icons=1
 icon-location=left
 max-icon-size=48
 max-visible=3
-format=<span color="#be95ff" size="large"><b>%s</b></span>\n%b
+format=<span color="#c4b28a" size="large"><b>%s</b></span>\n%b
 
 # Behavior
 default-timeout=8000
@@ -32,14 +32,14 @@ layer=overlay
 anchor=top-right
 
 [urgency=low]
-border-color=#393939
-format=<span color="#3ddbd9" size="large"><b>%s</b></span>\n%b
+border-color=#282727
+format=<span color="#8ea4a2" size="large"><b>%s</b></span>\n%b
 
 [urgency=normal]
-border-color=#525252
-format=<span color="#be95ff" size="large"><b>%s</b></span>\n%b
+border-color=#625e5a
+format=<span color="#c4b28a" size="large"><b>%s</b></span>\n%b
 
 [urgency=high]
-border-color=#ee5396
+border-color=#c4746e
 default-timeout=0
-format=<span color="#ee5396" size="large"><b>%s</b></span>\n%b
+format=<span color="#c4746e" size="large"><b>%s</b></span>\n%b
