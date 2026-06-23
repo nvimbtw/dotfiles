@@ -10,6 +10,7 @@ palette = "kanagawa"
 
 format = """
  $hostname\
+${custom.win}${custom.wsl}${custom.arch}\
 $directory\
 $git_branch$git_status\
 $c$dotnet$golang$java$lua$nodejs$php$python$rust$zig\
@@ -37,6 +38,29 @@ ssh_only = true
 ssh_symbol = "󰣀 "
 style = "fg:base0c"
 format = "[$ssh_symbol$hostname]($style)[ │ ](fg:base03)"
+
+# System — which machine am I on: native Arch, WSL, or Windows/PowerShell.
+# Only one ever renders; WSL is told apart from native Linux by the
+# "microsoft" string the WSL kernel leaves in /proc/version.
+[custom.win]
+os = "windows"
+symbol = ""
+style = "fg:base0c"
+format = "[$symbol windows]($style)[ │ ](fg:base03)"
+
+[custom.wsl]
+os = "linux"
+when = "grep -qi microsoft /proc/version"
+symbol = ""
+style = "fg:base0c"
+format = "[$symbol wsl]($style)[ │ ](fg:base03)"
+
+[custom.arch]
+os = "linux"
+when = "! grep -qi microsoft /proc/version"
+symbol = "󰣇"
+style = "fg:base0c"
+format = "[$symbol arch]($style)[ │ ](fg:base03)"
 
 # Location — aqua, like the bar's date/info
 [directory]
