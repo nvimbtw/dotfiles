@@ -1,4 +1,8 @@
-/* kanagawa-dragon.css - Kanagawa Dragon theme for Discord */
+/* kanagawa-dragon-v3.css - Kanagawa Dragon (Editorial v3) for Discord
+ * v3 = v1's rounded corners + thin borders, plus: italics in Neon (no Radon),
+ * a 50/30/20 color system (Sand primary / Aqua referenced-content / Red alerts),
+ * two-tone fade gradients on mention & reply highlights, and the v2 niceties
+ * (uppercase masthead, quieted timestamps, hover-only scrollbars, flat nameplate). */
 
 :root {
     container-name: root;
@@ -17,7 +21,7 @@ body {
 
     /* fonts — Monaspice Nerdfont family
      * primary:  Neon (default UI text)
-     * italic:   Radon (slanted/emphasis text)
+     * italic:   Neon (v3 — italics use the primary face, no Radon)
      * small:    Krypton (compact text like timestamps, badges)
      * code:     Neon Mono (code blocks, preformatted)
      */
@@ -43,9 +47,9 @@ body {
     --font-code: var(--font-code);
 }
 
-/* italic text uses Radon variant */
+/* v3: italics use the Neon (primary) face — no Radon variant */
 i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
-    font-family: 'MonaspiceRn Nerd Font', ui-sans-serif, system-ui, sans-serif !important;
+    font-family: 'MonaspiceNe Nerd Font', ui-sans-serif, system-ui, sans-serif !important;
 }
 
 /* small text uses Krypton variant */
@@ -469,9 +473,10 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
     margin-left: calc((var(--custom-guild-list-padding) - 4px) / 2);
 }
 
-/* embeds — soft filled block, no border */
+/* embeds — soft filled block with an aqua spine (v3: "referenced content" group) */
 .embedFull__623de {
     border: none !important;
+    border-left: 2px solid var(--blue-2) !important;
     background-color: var(--bg-3);
 }
 
@@ -775,10 +780,11 @@ body {
     --accent-4: var(--purple-4); /* accent buttons when hovered */
     --accent-5: var(--purple-5); /* accent buttons when clicked */
     --accent-new: var(--red-2); /* stuff that's normally red like mute/deafen buttons — red, the system's high-status color */
-    --mention: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 90%) 40%, transparent); /* background of messages that mention you */
-    --mention-hover: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 95%) 40%, transparent); /* background of messages that mention you when hovered */
-    --reply: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 90%) 40%, transparent); /* background of messages that reply to you */
-    --reply-hover: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 95%) 40%, transparent); /* background of messages that reply to you when hovered */
+    /* v3: two-tone fades. mention = sand→orange (alerts-adjacent warm), reply = aqua→teal (referenced content) */
+    --mention: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 82%) 0%, color-mix(in oklch, var(--base0C), transparent 90%) 38%, transparent 82%); /* background of messages that mention you */
+    --mention-hover: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 88%) 0%, color-mix(in oklch, var(--base0C), transparent 93%) 38%, transparent 82%); /* background of messages that mention you when hovered */
+    --reply: linear-gradient(to right, color-mix(in oklch, var(--blue-2), transparent 82%) 0%, color-mix(in oklch, var(--base0F), transparent 90%) 38%, transparent 82%); /* background of messages that reply to you */
+    --reply-hover: linear-gradient(to right, color-mix(in oklch, var(--blue-2), transparent 88%) 0%, color-mix(in oklch, var(--base0F), transparent 93%) 38%, transparent 82%); /* background of messages that reply to you when hovered */
 
     /* status indicator colors */
     --online: var(--green-2); /* #87a987 */
@@ -1389,8 +1395,8 @@ body {
         .mentioned__5126c:before /* mention message left edge */ {
         background-color: var(--accent-2) !important;
     }
-    .replying__5126c:before /* reply message left edge */ {
-        background-color: var(--text-2) !important;
+    .replying__5126c:before /* reply message left edge — v3: aqua, referenced content */ {
+        background-color: var(--blue-2) !important;
     }
 
     .badge_c3d04b /* shop "orbs exclusive" badge */ {
@@ -1999,4 +2005,57 @@ body {
         min-height: 0;
         height: auto;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   v3 — carried over from v2 (color/type niceties; corners stay round)
+   Hashed Discord classes; a renamed hash simply no-ops — update it here.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Masthead: structural headers get small-caps + tracking ──── */
+.name_f37cb1 /* server name */,
+.title_f75fb0 /* channel name in chat header */,
+.title__9293f /* friends / page section title */ {
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-family: var(--font-small);
+    font-weight: 600;
+}
+/* keep the channel topic readable — masthead is for the name only */
+.topic_f75fb0 {
+    text-transform: none;
+    letter-spacing: normal;
+    font-family: var(--font-primary);
+    font-weight: normal;
+}
+/* extra tracking on Discord's already-uppercase category/section labels */
+.eyebrow__9293f,
+.headerText__01b9b,
+.title_d29985,
+.privateChannelsHeaderContainer__3fc6e {
+    letter-spacing: 0.12em !important;
+}
+
+/* ── Quieted metadata: timestamps recede behind the content ──── */
+.timestamp__972a0,
+.timestamp_c1da2c,
+.timestamp_d7e657,
+.time_c1da2c {
+    opacity: 0.6;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+}
+
+/* ── Hairline scrollbars: visible only while area is hovered ──── */
+::-webkit-scrollbar-thumb {
+    background-color: transparent !important;
+    transition: background-color 0.18s ease;
+}
+:hover::-webkit-scrollbar-thumb {
+    background-color: var(--bg-1) !important;
+}
+
+/* ── Flatten the nameplate gradient to a solid surface ────────── */
+.container_df39b2 /* nameplate */ {
+    background: var(--bg-3) !important;
 }

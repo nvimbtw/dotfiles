@@ -1,4 +1,5 @@
 hl.on("hyprland.start", function()
+    hl.exec_cmd("sleep 1 && systemctl --user start xdg-desktop-portal-hyprland xdg-desktop-portal")
     hl.exec_cmd("swaync")
     hl.exec_cmd("vesktop")
     hl.exec_cmd("gammastep")

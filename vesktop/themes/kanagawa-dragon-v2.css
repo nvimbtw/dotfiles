@@ -1,4 +1,7 @@
-/* kanagawa-dragon.css - Kanagawa Dragon theme for Discord */
+/* kanagawa-dragon-v2.css - Kanagawa Dragon (Editorial Minimalism v2) for Discord
+ * v2 over v1: square corners (hairline borders read as rules), uppercase masthead
+ * headers with tracking, quieted metadata, flattened gradients, hover-only
+ * scrollbars. Avatars keep a soft radius so faces aren't razor-sharp. */
 
 :root {
     container-name: root;
@@ -6,10 +9,11 @@
     --custom-guild-list-padding: 12px;
     --panel-backdrop-filter: none;
 
-    /* flat: zero rounding, square like the rest of the system */
-    --radius-lg: 10px;
-    --radius-md: 6px;
-    --radius-sm: 4px;
+    /* editorial: hard square grid — corners are rules, not cards */
+    --radius-lg: 0px;
+    --radius-md: 0px;
+    --radius-sm: 0px;
+    --radius-avatar: 3px; /* lone exception: soften faces/icons */
 }
 
 body {
@@ -516,7 +520,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 .userPopoutAvatar__02796 /* popout avatar */,
 .voiceAvatar__02796 /* voice avatar */,
 .botTagAvatar__82f07 /* bot tag in avatar */ {
-    border-radius: var(--radius-md) !important;
+    border-radius: var(--radius-avatar) !important;
 }
 /* avatar inner elements */
 .avatar__02796 img,
@@ -525,7 +529,7 @@ i, em, [style*="font-style: italic"], [style*="font-style:italic"] {
 .avatar__81b0e svg,
 .avatar__08316 img,
 .avatar__08316 svg {
-    border-radius: var(--radius-md) !important;
+    border-radius: var(--radius-avatar) !important;
 }
 
 .outer_c0bea0 /* profile outer */, 
@@ -775,10 +779,11 @@ body {
     --accent-4: var(--purple-4); /* accent buttons when hovered */
     --accent-5: var(--purple-5); /* accent buttons when clicked */
     --accent-new: var(--red-2); /* stuff that's normally red like mute/deafen buttons — red, the system's high-status color */
-    --mention: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 90%) 40%, transparent); /* background of messages that mention you */
-    --mention-hover: linear-gradient(to right, color-mix(in oklch, var(--accent-2), transparent 95%) 40%, transparent); /* background of messages that mention you when hovered */
-    --reply: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 90%) 40%, transparent); /* background of messages that reply to you */
-    --reply-hover: linear-gradient(to right, color-mix(in oklch, var(--text-3), transparent 95%) 40%, transparent); /* background of messages that reply to you when hovered */
+    /* v2: flat solid tints, no gradient fade */
+    --mention: color-mix(in oklch, var(--accent-2), transparent 92%); /* background of messages that mention you */
+    --mention-hover: color-mix(in oklch, var(--accent-2), transparent 88%); /* background of messages that mention you when hovered */
+    --reply: color-mix(in oklch, var(--text-3), transparent 92%); /* background of messages that reply to you */
+    --reply-hover: color-mix(in oklch, var(--text-3), transparent 88%); /* background of messages that reply to you when hovered */
 
     /* status indicator colors */
     --online: var(--green-2); /* #87a987 */
@@ -1999,4 +2004,60 @@ body {
         min-height: 0;
         height: auto;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   v2 — Editorial Minimalism additions
+   These come last so they win over the base rules above.
+   The selectors are hashed Discord classes (like the rest of the
+   theme); if a future Discord update renames one, the matching rule
+   simply no-ops — adjust the hash here to restore it.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Masthead: structural headers get small-caps + tracking ──── */
+.name_f37cb1 /* server name */,
+.title_f75fb0 /* channel name in chat header */,
+.title__9293f /* friends / page section title */ {
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-family: var(--font-small);
+    font-weight: 600;
+}
+/* keep the channel topic readable — masthead is for the name only */
+.topic_f75fb0 {
+    text-transform: none;
+    letter-spacing: normal;
+    font-family: var(--font-primary);
+    font-weight: normal;
+}
+/* extra tracking on Discord's already-uppercase category/section labels */
+.eyebrow__9293f,
+.headerText__01b9b,
+.title_d29985,
+.privateChannelsHeaderContainer__3fc6e {
+    letter-spacing: 0.12em !important;
+}
+
+/* ── Quieted metadata: timestamps recede behind the content ──── */
+.timestamp__972a0,
+.timestamp_c1da2c,
+.timestamp_d7e657,
+.time_c1da2c {
+    opacity: 0.6;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+}
+
+/* ── Hairline scrollbars: visible only while scrolling area is hovered ── */
+::-webkit-scrollbar-thumb {
+    background-color: transparent !important;
+    transition: background-color 0.18s ease;
+}
+:hover::-webkit-scrollbar-thumb {
+    background-color: var(--bg-1) !important;
+}
+
+/* ── Flatten decorative gradients to a solid surface ──────────── */
+.container_df39b2 /* nameplate */ {
+    background: var(--bg-3) !important;
 }
