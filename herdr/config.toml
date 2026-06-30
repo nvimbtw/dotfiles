@@ -1,0 +1,131 @@
+# herdr configuration — Kanagawa Dragon rice + tmux parity
+# Migrated from ~/.tmux.conf. Apply changes live with: herdr server reload-config
+# Defaults reference: herdr --default-config
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Theme — Kanagawa Dragon
+# Base theme is herdr's built-in `kanagawa`; [theme.custom] overrides the palette
+# toward the Dragon variant (darker/more muted) using colors from the old tmux conf.
+# Token names below are confirmed valid for this herdr build.
+# ─────────────────────────────────────────────────────────────────────────────
+[theme]
+name = "kanagawa"
+
+[theme.custom]
+# Backgrounds / surfaces (tmux status bg #181616, pane border #282727)
+panel_bg    = "#181616"
+background   = "#181616"
+base         = "#181616"
+surface_dim  = "#0d0c0c"   # dragonBlack0
+surface0     = "#282727"   # inactive pane border (tmux pane-border-style)
+surface1     = "#363646"
+overlay0     = "#625e5a"   # muted ("elsewhere" dot color)
+overlay1     = "#727169"
+subtext0     = "#a6a69c"
+text         = "#c5c9c5"   # dragonWhite (tmux status fg)
+foreground   = "#c5c9c5"
+# Accents (Kanagawa Dragon)
+accent       = "#b6927b"   # active pane border (tmux pane-active-border-style)
+red          = "#c4746e"   # dragonRed
+maroon       = "#c4746e"
+peach        = "#b6927b"   # dragonOrange
+yellow       = "#c4b28a"   # carpYellow (tmux session-name color)
+green        = "#8a9a7b"   # dragonGreen
+teal         = "#8ea4a2"   # dragonAqua (tmux command/user color)
+sky          = "#8ea4a2"
+blue         = "#8ba4b0"   # dragonBlue
+mauve        = "#a292a3"   # dragonPink
+pink         = "#a292a3"
+lavender     = "#8992a7"   # dragonViolet
+# Cursor / selection (tmux mode-style bg=#282727 fg=#c4b28a)
+cursor               = "#c4b28a"
+selection_background = "#282727"
+selection_foreground = "#c4b28a"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Keybindings — mirror tmux as closely as herdr allows
+# tmux prefix was C-Space; vim pane nav; | / - splits; c new-window.
+# ─────────────────────────────────────────────────────────────────────────────
+[keys]
+prefix = "ctrl+space"                       # tmux: set -g prefix C-Space
+
+# Splits: `_` = split right, `-` = split down  (herdr rejected `|`/underscore;
+# `_` is Shift+minus, so press prefix then `_`). prefix+v kept as a fallback.
+split_vertical   = ["prefix+shift+minus", "prefix+v"]   # split right — press `_`
+split_horizontal = "prefix+minus"                       # split down  — press `-`
+
+new_tab = "prefix+c"                         # tmux: bind c new-window (window ≈ herdr tab)
+
+# Renaming (herdr "workspace" ≈ tmux "session")
+rename_workspace = "prefix+shift+w"          # rename session/workspace
+rename_pane      = "prefix+shift+p"          # rename pane
+rename_tab       = "prefix+comma"            # rename tab (tmux rename-window muscle memory)
+
+# Sidebar
+toggle_sidebar = "prefix+b"                  # open/close the sidebar
+
+# Vim pane navigation (tmux prefix h/j/k/l) + direct ctrl+alt aliases (no prefix)
+focus_pane_left  = ["prefix+h", "ctrl+alt+h"]
+focus_pane_down  = ["prefix+j", "ctrl+alt+j"]
+focus_pane_up    = ["prefix+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+
+# Pane management
+zoom        = "prefix+z"
+close_pane  = "prefix+x"
+resize_mode = "prefix+r"                     # replaces tmux -r resize binds
+copy_mode   = "prefix+["                     # vi copy mode (v select, y copy) — herdr default
+
+# Tabs / workspaces
+next_tab         = "prefix+n"
+previous_tab     = "prefix+p"
+workspace_picker = "prefix+w"      # built-in fuzzy picker (press / to filter, j/k, Enter)
+goto             = "prefix+g"      # built-in "goto" picker
+detach           = "prefix+q"
+reload_config    = "prefix+shift+r"
+
+# Real fzf switcher (tmux-fzf replacement) — opens fzf in a temp pane, jumps to
+# the chosen workspace/tab. Script: ~/.config/herdr/herdr-fzf.sh
+[[keys.command]]
+key     = "prefix+f"
+type    = "pane"
+command = "/home/x_x/.config/herdr/herdr-fzf.sh"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# UI / borders / behavior
+# pane_gaps=true => each pane drawn as its own boxed outline (closest to the
+# "outer-edge border" look). Set false for a single thin shared divider.
+# ─────────────────────────────────────────────────────────────────────────────
+[ui]
+pane_borders  = true
+pane_gaps     = true
+show_agent_labels_on_pane_borders = true   # show pane name / detected agent on each pane's top border
+accent        = "#b6927b"     # keep in sync with theme.custom.accent
+mouse_capture = true          # tmux: set -g mouse on
+sidebar_width = 26
+confirm_close = true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Terminal — new panes inherit cwd like tmux split -c "#{pane_current_path}"
+# default_shell unset => uses $SHELL (nushell). PATH handled in nushell env.nu.
+# ─────────────────────────────────────────────────────────────────────────────
+[terminal]
+new_cwd = "follow"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Session persistence — replaces tmux-resurrect / tmux-continuum
+# ─────────────────────────────────────────────────────────────────────────────
+[session]
+resume_agents_on_restore = true
+
+[experimental]
+pane_history = true            # replay recent pane screen across server restarts
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Agent notifications (pairs with `herdr integration install claude`)
+# ─────────────────────────────────────────────────────────────────────────────
+[ui.toast]
+delivery = "system"            # OS desktop notification when a bg agent needs you / finishes
+
+[ui.sound]
+enabled = true

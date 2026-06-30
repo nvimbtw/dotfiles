@@ -44,6 +44,7 @@
 !/tmux/
 !/vesktop/
 !/zathura/
+!/herdr/
 
 # 5. Bullshit Removal (Runtime/Cache/State)
 # ------------------------------------------
